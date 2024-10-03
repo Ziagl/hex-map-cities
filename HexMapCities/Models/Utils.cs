@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using com.hexagonsimulations.Geometry.Hex;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("HexMapCities.Tests")]
 
@@ -13,16 +14,16 @@ internal class Utils
         // add tile borders for city center
         borderLines.AddRange(Utils.ComputeBordersOfTile(city.PositionPixel, tileWidth, tileHeight));
         // add tile borders for all city tiles
-        foreach(var tile in city.TilesPixel)
+        foreach (var tile in city.TilesPixel)
         {
             var tileBorders = Utils.ComputeBordersOfTile(tile, tileWidth, tileHeight);
-            foreach(var tileBorder in tileBorders)
+            foreach (var tileBorder in tileBorders)
             {
                 bool inList = false;
                 // if tile borders already in list, remove them
-                for(int i = 0; i < borderLines.Count; i++)
+                for (int i = 0; i < borderLines.Count; i++)
                 {
-                    if (borderLines[i].Equals(tileBorder))
+                    if (borderLines[i] == tileBorder)
                     {
                         borderLines.RemoveAt(i);
                         inList = true;
@@ -30,7 +31,7 @@ internal class Utils
                     }
                 }
                 // add tile borders if not already in list
-                if(!inList)
+                if (!inList)
                 {
                     borderLines.Add(tileBorder);
                 }
@@ -54,16 +55,16 @@ internal class Utils
         }
         // find border lines that are unique
         List<(int cityId, Line borderLine)> uniqueBorders = new();
-        for(int i = 0; i < allBorders.Count; ++i)
+        for (int i = 0; i < allBorders.Count; ++i)
         {
             bool isUnique = true;
             for (int j = 0; j < allBorders.Count; ++j)
             {
-                if(i == j)
+                if (i == j)
                 {
                     continue;
                 }
-                if (allBorders[i].borderLine.Equals(allBorders[j].borderLine))
+                if (allBorders[i].borderLine == allBorders[j].borderLine)
                 {
                     isUnique = false;
                     break;
@@ -77,7 +78,7 @@ internal class Utils
         // refill borders of all cities
         foreach (var city in cities)
         {
-            foreach(var border in allBorders)
+            foreach (var border in uniqueBorders)
             {
                 if (border.cityId == city.Id)
                 {
@@ -93,29 +94,50 @@ internal class Utils
         List<Line> borderLines = new();
         var tileCenter = new Point(tileOrigin.X + tileWidth / 2, tileOrigin.Y + tileHeight / 2);
         // NW
-        var startPoint = new Point(tileOrigin.X - tileWidth / 2, tileOrigin.Y - tileHeight / 4);
-        var endPoint = new Point(tileOrigin.X, tileOrigin.Y - tileHeight / 2);
+        var startPoint = new Point(tileCenter.X - tileWidth / 2, tileCenter.Y - tileHeight / 4);
+        var endPoint = new Point(tileCenter.X, tileCenter.Y - tileHeight / 2);
         borderLines.Add(new Line(startPoint, endPoint));
         // NE
         startPoint = endPoint;
-        endPoint = new Point(tileOrigin.X + tileWidth / 2, tileOrigin.Y - tileHeight / 4);
+        endPoint = new Point(tileCenter.X + tileWidth / 2, tileCenter.Y - tileHeight / 4);
         borderLines.Add(new Line(startPoint, endPoint));
         // E
         startPoint = endPoint;
-        endPoint = new Point(tileOrigin.X + tileWidth / 2, tileOrigin.Y + tileHeight / 4);
+        endPoint = new Point(tileCenter.X + tileWidth / 2, tileCenter.Y + tileHeight / 4);
         borderLines.Add(new Line(startPoint, endPoint));
         // SE
         startPoint = endPoint;
-        endPoint = new Point(tileOrigin.X, tileOrigin.Y + tileHeight / 2);
+        endPoint = new Point(tileCenter.X, tileCenter.Y + tileHeight / 2);
         borderLines.Add(new Line(startPoint, endPoint));
         // SW
         startPoint = endPoint;
-        endPoint = new Point(tileOrigin.X - tileWidth / 2, tileOrigin.Y + tileHeight / 4);
+        endPoint = new Point(tileCenter.X - tileWidth / 2, tileCenter.Y + tileHeight / 4);
         borderLines.Add(new Line(startPoint, endPoint));
         // W
         startPoint = endPoint;
-        endPoint = new Point(tileOrigin.X - tileWidth / 2, tileOrigin.Y - tileHeight / 4);
+        endPoint = new Point(tileCenter.X - tileWidth / 2, tileCenter.Y - tileHeight / 4);
         borderLines.Add(new Line(startPoint, endPoint));
         return borderLines;
+    }
+
+    // checks if given tile is neighbot of any city tile
+    internal static bool IsCityNeighbor(CityBase city, CubeCoordinates tile)
+    {
+        // check if tile is direct neighbor of city
+        if (city.Position.Neighbors().Contains(tile))
+        {
+            return true;
+        }
+
+        // check if tile is neighbor of any city tile
+        foreach (var cityTile in city.Tiles)
+        {
+            if (cityTile.Neighbors().Contains(tile))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

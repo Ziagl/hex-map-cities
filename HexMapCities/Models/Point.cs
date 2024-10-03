@@ -30,4 +30,24 @@ public class Point
                X == point.X &&
                Y == point.Y;
     }
+
+    public static bool operator ==(Point left, Point right)
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return true;
+        }
+
+        if (left is null || right is null)
+        {
+            return false;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Point left, Point right)
+    {
+        return !(left == right);
+    }
 }

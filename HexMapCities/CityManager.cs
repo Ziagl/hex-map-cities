@@ -1,8 +1,6 @@
 ﻿using com.hexagonsimulations.Geometry.Hex;
 using HexMapCities.Enums;
 using HexMapCities.Models;
-using System.IO;
-using System.Reflection.Emit;
 
 namespace HexMapCities;
 
@@ -20,7 +18,7 @@ public class CityManager
         List<int> layerMap = new();
         foreach (var tile in map)
         {
-            if (notPassableTiles.Count == map.Count && notPassableTiles.Contains(tile))
+            if (notPassableTiles.Contains(tile))
             {
                 layerMap.Add((int)TileType.UNBUILDABLE);
             }
@@ -98,10 +96,17 @@ public class CityManager
             return false;
         }
         // check if given tile is a valid neighbor of city
-        // TODO
+        if(!Utils.IsCityNeighbor(city, tile))
+        {
+            return false;
+        }
         // check if tile is not already occupied by another city
         foreach (var otherCity in _cityStore.Values)
         {
+            if (city.Id == otherCity.Id)
+            {
+                continue;
+            }
             if (city.Position == otherCity.Position || otherCity.Tiles.Contains(tile))
             {
                 return false;
