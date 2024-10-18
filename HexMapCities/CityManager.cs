@@ -9,11 +9,15 @@ public class CityManager
     private Dictionary<int, CityBase> _cityStore = new();
     private int _lastCityStoreId = 0;
     private MapData _map = new();
+    private int _tileWidth = 0;
+    private int _tileHeight = 0;
 
-    public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles)
+    public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, int tileWidth = 1, int tileHeight = 1)
     {
         _map.Rows = rows;
         _map.Columns = columns;
+        _tileWidth = tileWidth;
+        _tileHeight = tileHeight;
 
         List<int> layerMap = new();
         foreach (var tile in map)
@@ -59,13 +63,13 @@ public class CityManager
     /// <param name="playerId">id of player to create borders for</param>
     /// <param name="tileWidth">width of tile in pixel</param>
     /// <param name="tileHeight">height of tile in pixel</param>
-    public void CreateCityBorders(int playerId, int tileWidth, int tileHeight)
+    public void CreateCityBorders(int playerId)
     {
         var playerCities = GetCitiesOfPlayer(playerId);
         // create all borders for all cities individually
         foreach (var city in playerCities)
         {
-            Utils.CreateBordersForCity(city, tileWidth, tileHeight);
+            Utils.CreateBordersForCity(city, _tileWidth, _tileHeight);
         }
         // remove all duplicated borders (overlapping cities)
         Utils.RemoveDuplicateBorders(playerCities);
