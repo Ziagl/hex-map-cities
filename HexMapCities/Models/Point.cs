@@ -1,6 +1,4 @@
-﻿using com.hexagonsimulations.Geometry.Hex;
-
-namespace HexMapCities.Models;
+﻿namespace HexMapCities.Models;
 
 public class Point
 {
