@@ -140,4 +140,69 @@ internal class Utils
 
         return false;
     }
+
+    // calculates pixel position of tile
+    internal static Point? ComputeTilePixel(Point cityPixel, CubeCoordinates cityPosition, CubeCoordinates tile, int tileWidth, int tileHeight, int depth = 0, List<CubeCoordinates>? alreadyVisited = null, int maxDepth = 5)
+    {
+        if (alreadyVisited is null)
+        {
+            alreadyVisited = new() { cityPosition };
+        }
+
+        // if tile is neighbor, we can directly calculate
+        CubeCoordinates diff = tile - cityPosition;
+        var neighbors = new List<CubeCoordinates>()
+        {
+            new CubeCoordinates(0, -1, 1),  // NW
+            new CubeCoordinates(1, -1, 0),  // NO
+            new CubeCoordinates(1, 0, -1),  // O
+            new CubeCoordinates(0, 1, -1),  // SO
+            new CubeCoordinates(-1, 1, 0),  // SW
+            new CubeCoordinates(-1, 0, 1),  // W
+        };
+        var pixelChanges = new List<Point>()
+        {
+            new Point(-tileWidth / 2,  (int) (-tileHeight * 0.75)),
+            new Point(tileWidth / 2, (int)(-tileHeight * 0.75)),
+            new Point(tileWidth,0),
+            new Point(tileWidth / 2, (int)(tileHeight * 0.75)),
+            new Point(-tileWidth / 2, (int)(tileHeight * 0.75)),
+            new Point(-tileWidth,0),
+        };
+
+        for (int i = 0; i < neighbors.Count; ++i)
+        {
+            if (alreadyVisited.Contains(neighbors[i] + cityPosition))
+            {
+                continue;
+            }
+            
+            if (diff.q == neighbors[i].q && diff.r == neighbors[i].r && diff.s == neighbors[i].s)
+            {
+                return new Point(cityPixel.X + pixelChanges[i].X, cityPixel.Y + pixelChanges[i].Y);
+            }
+            else
+            {
+                alreadyVisited.Add(neighbors[i] + cityPosition);
+            }
+        }
+
+        // if not, we can do a recursive search
+        ++depth;
+        if(depth < maxDepth)
+        {
+            for(int i = 0; i < neighbors.Count; ++i)
+            {
+                var newCityPixel = new Point(cityPixel.X + pixelChanges[i].X, cityPixel.Y + pixelChanges[i].Y);
+                var newCityPosition = cityPosition + neighbors[i];
+                var result = ComputeTilePixel(newCityPixel, newCityPosition, tile, tileWidth, tileHeight, depth, alreadyVisited);
+                if(result is not null)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return null;
+    }
 }

@@ -110,13 +110,11 @@ public class CityManagerTests
         Assert.True(success);
         // add tile to which is already part of city
         var newTile = new CubeCoordinates(1, 0, -1);
-        var newTilePixel = new Point(34, 0);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.False(success);
         // add tile to which is not part of city
         newTile = new CubeCoordinates(2, 0, -2);
-        newTilePixel = new Point(68, 0);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.True(success);
         Assert.Equal(3, city.Tiles.Count);
     }
@@ -132,18 +130,15 @@ public class CityManagerTests
         Assert.True(success);
         // add tile with a gap to city fails
         var newTile = new CubeCoordinates(3, 0, -3);
-        var newTilePixel = new Point(102, 0);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.False(success);
         // close the gap
         newTile = new CubeCoordinates(2, 0, -2);
-        newTilePixel = new Point(68, 0);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.True(success);
         // now same tile can be added
         newTile = new CubeCoordinates(3, 0, -3);
-        newTilePixel = new Point(102, 0);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.True(success);
         Assert.Equal(4, city.Tiles.Count);
     }
@@ -161,13 +156,11 @@ public class CityManagerTests
         Assert.True(success);
         // add tile to which is already part of city
         var newTile = new CubeCoordinates(2, 0, -2);
-        var newTilePixel = new Point(68, 0);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.False(success);
         // add tile to which is already part of other city
         newTile = new CubeCoordinates(2, 0, -2);
-        newTilePixel = new Point(68, 0);
-        success = cityManager.AddCityTile(city2.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city2.Id, newTile);
         Assert.False(success);
     }
 
@@ -182,8 +175,7 @@ public class CityManagerTests
         cityManager.CreateCityBorders(city.Player);
         Assert.Equal(12, city.Borders.Count);
         var newTile = new CubeCoordinates(1, 1, -2);
-        var newTilePixel = new Point(51, 24);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.True(success);
         cityManager.CreateCityBorders(city.Player);
         Assert.Equal(14, city.Borders.Count);
@@ -204,8 +196,7 @@ public class CityManagerTests
         cityManager.CreateCityBorders(city2.Player);
         Assert.Equal(22, city.Borders.Count + city2.Borders.Count);
         var newTile = new CubeCoordinates(1, 1, -2);
-        var newTilePixel = new Point(51, 24);
-        success = cityManager.AddCityTile(city.Id, newTile, newTilePixel);
+        success = cityManager.AddCityTile(city.Id, newTile);
         Assert.True(success);
         cityManager.CreateCityBorders(city.Player);
         Assert.Equal(20, city.Borders.Count + city2.Borders.Count);

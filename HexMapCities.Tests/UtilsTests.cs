@@ -30,6 +30,63 @@ public class UtilsTests
         Assert.False(neighbor);
     }
 
+    [Fact]
+    public void TestComputeTilePixel()
+    {
+        int tileWidth = 34;
+        int tileHeight = 32;
+        var cityPosition = new CubeCoordinates(1, 1, -2);
+        var cityPixel = new Point(51, 24);
+        // easy tests
+        var tilePositions = new List<CubeCoordinates>()
+        {
+            new CubeCoordinates(1, 0, -1),
+            new CubeCoordinates(2, 0, -2),
+            new CubeCoordinates(2, 1, -3),
+            new CubeCoordinates(1, 2, -3),
+            new CubeCoordinates(0, 2, -2),
+            new CubeCoordinates(0, 1, -1),
+        };
+        var results = new List<Point>()
+        {
+            new Point(34,0),
+            new Point(68,0),
+            new Point(85,24),
+            new Point(68,48),
+            new Point(34,48),
+            new Point(17,24),
+        };
+        for (int i = 0; i < tilePositions.Count; ++i)
+        {
+            var tilePixel = Utils.ComputeTilePixel(cityPixel, cityPosition, tilePositions[i], tileWidth, tileHeight);
+            Assert.NotNull(tilePixel);
+            Assert.Equal(results[i].X, tilePixel.X);
+            Assert.Equal(results[i].Y, tilePixel.Y);
+        }
+        // advanced tests
+        tilePositions = new List<CubeCoordinates>()
+        {
+            new CubeCoordinates(0, 0, 0),
+            new CubeCoordinates(3, 0, -3),
+            new CubeCoordinates(4, 1, -5),
+            new CubeCoordinates(4, 2, -6)
+        };
+        results = new List<Point>()
+        {
+            new Point(0,0),
+            new Point(102,0),
+            new Point(153,24),
+            new Point(170,48),
+        };
+        for (int i = 0; i < tilePositions.Count; ++i)
+        {
+            var tilePixel = Utils.ComputeTilePixel(cityPixel, cityPosition, tilePositions[i], tileWidth, tileHeight);
+            Assert.NotNull(tilePixel); 
+            Assert.Equal(results[i].X, tilePixel.X);
+            Assert.Equal(results[i].Y, tilePixel.Y);
+        }
+    }
+
     private CityBase CreateExampleCity1()
     {
         return new CityBase

@@ -80,9 +80,8 @@ public class CityManager
     /// </summary>
     /// <param name="cityId">id of city that should grow</param>
     /// <param name="tile">new tile of city</param>
-    /// <param name="tilePixel">pixel position of tile</param>
     /// <returns>true if tile was added, false if tile is already part of city or not a valid neighbor</returns>
-    public bool AddCityTile(int cityId, CubeCoordinates tile, Point tilePixel)
+    public bool AddCityTile(int cityId, CubeCoordinates tile)
     {
         CityBase? city = null;
         if (!_cityStore.TryGetValue(cityId, out city))
@@ -115,6 +114,12 @@ public class CityManager
             {
                 return false;
             }
+        }
+        var tilePixel = Utils.ComputeTilePixel(city.PositionPixel, city.Position, tile, _tileWidth, _tileHeight);
+        // check if tile pixel was computed successfully
+        if(tilePixel is null)
+        {
+            return false;
         }
         // add tile to city
         city.Tiles.Add(tile);
