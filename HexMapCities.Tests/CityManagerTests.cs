@@ -102,6 +102,31 @@ public class CityManagerTests
     }
 
     [Fact]
+    public void TestTwoCitiesTouchOnOneLine()
+    {
+        var exampleMap = Enumerable.Repeat(0, 36).ToList();
+        var cityManager = new CityManager(exampleMap, 6, 6, new List<int>(), _tileWidth, _tileHeight);
+        var city = CreateExampleCity1();
+        bool success = cityManager.CreateCity(city);
+        Assert.True(success);
+        var city2 = CreateExampleCity1();
+        city2.Position = new CubeCoordinates(0, 3, -3);
+        city2.PositionPixel = new(51, 72);
+        city2.Tiles = new ();
+        city2.TilesPixel = new();
+        city2.Borders = new();
+        success = cityManager.CreateCity(city2);
+        Assert.True(success);
+        var tileList = new List<CubeCoordinates>() { new CubeCoordinates(0, 2, -2), new CubeCoordinates(1, 2, -3), new CubeCoordinates(1, 3, -4), new CubeCoordinates(0, 4, -4), new CubeCoordinates(-1, 4, -3), new CubeCoordinates(-1, 3, -2) };
+        foreach (var tile in tileList) {
+            cityManager.AddCityTile(city2.Id, tile);
+        }
+        cityManager.CreateCityBorders(city.Player);
+        Assert.Equal(11, city.Borders.Count);
+        Assert.Equal(17, city2.Borders.Count);
+    }
+
+    [Fact]
     public void TestAddCityTile()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();

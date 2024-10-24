@@ -162,11 +162,11 @@ internal class Utils
         };
         var pixelChanges = new List<Point>()
         {
-            new Point(-tileWidth / 2,  (int) (-tileHeight * 0.75)),
-            new Point(tileWidth / 2, (int)(-tileHeight * 0.75)),
+            new Point(-tileWidth / 2,  -tileHeight * 0.75f),
+            new Point(tileWidth / 2, -tileHeight * 0.75f),
             new Point(tileWidth,0),
-            new Point(tileWidth / 2, (int)(tileHeight * 0.75)),
-            new Point(-tileWidth / 2, (int)(tileHeight * 0.75)),
+            new Point(tileWidth / 2, tileHeight * 0.75f),
+            new Point(-tileWidth / 2, tileHeight * 0.75f),
             new Point(-tileWidth,0),
         };
 

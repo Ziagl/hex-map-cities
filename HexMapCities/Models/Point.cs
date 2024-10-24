@@ -4,18 +4,18 @@ public class Point
 {
     public Point()
     {
-        X = 0;
-        Y = 0;
+        X = 0.0f;
+        Y = 0.0f;
     }
 
-    public Point(int v1, int v2)
+    public Point(float v1, float v2)
     {
         X = v1;
         Y = v2;
     }
 
-    public int X { get; set; }
-    public int Y { get; set; }
+    public float X { get; set; }
+    public float Y { get; set; }
 
     public override int GetHashCode()
     {
