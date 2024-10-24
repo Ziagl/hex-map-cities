@@ -97,7 +97,8 @@ public class CityManagerTests
         success = cityManager.CreateCity(city2);
         Assert.True(success);
         cityManager.CreateCityBorders(city.Player);
-        Assert.Equal(24, city.Borders.Count + city2.Borders.Count);
+        Assert.Equal(9, city.Borders.Count);
+        Assert.Equal(15, city2.Borders.Count);
     }
 
     [Fact]
