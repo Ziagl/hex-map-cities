@@ -7,6 +7,9 @@ namespace HexMapCities.Models;
 
 internal class Utils
 {
+    // for pixel logic with floats it is ok if they differ up to 1 pixel (min rounding error)
+    internal static float PRECISION = 1.0001f;
+
     // creates border lines for a city by given tile pixel coordinates and width/height of tile
     internal static void CreateBordersForCity(CityBase city, int tileWidth, int tileHeight)
     {

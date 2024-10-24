@@ -25,8 +25,8 @@ public class Point
     public override bool Equals(object? obj)
     {
         return obj is Point point &&
-               X == point.X &&
-               Y == point.Y;
+               Math.Abs(X - point.X) < Utils.PRECISION &&
+               Math.Abs(Y - point.Y) < Utils.PRECISION;
     }
 
     public static bool operator ==(Point left, Point right)

@@ -81,6 +81,26 @@ public class CityManagerTests
     }
 
     [Fact]
+    public void TestCreateCityAddTilesAndBorders()
+    {
+        var exampleMap = Enumerable.Repeat(0, 16).ToList();
+        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), _tileHeight, _tileWidth);
+        var city = CreateExampleCity1();
+        var tiles = city.Tiles;
+        city.PositionPixel = new Point(16, 17);
+        city.Tiles = new();
+        city.TilesPixel = new();
+        bool success = cityManager.CreateCity(city);
+        Assert.True(success);
+        foreach (var tile in tiles)
+        {
+            cityManager.AddCityTile(city.Id, tile);
+        }
+        cityManager.CreateCityBorders(city.Player);
+        Assert.Equal(12, city.Borders.Count);
+    }
+
+    [Fact]
     public void TestCreateCityBordersMoreCities()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
