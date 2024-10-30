@@ -15,5 +15,6 @@ public class CityBase
     public Point PositionPixel = new();      // absolute position in pixels
     public List<Point> TilesPixel = new();   // absolute positions in pixels
     public List<Line> Borders = new();       // border lines in absolute pixels
-    // TODO: add more properties
+    // properties
+    public Dictionary<string, object> Properties = new();
 }

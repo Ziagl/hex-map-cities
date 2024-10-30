@@ -1,6 +1,7 @@
 using com.hexagonsimulations.Geometry.Hex;
 using HexMapCities.Enums;
 using HexMapCities.Models;
+using HexMapCities.Tests.Models;
 
 namespace HexMapCities.Tests;
 
@@ -246,6 +247,24 @@ public class CityManagerTests
         Assert.True(success);
         cityManager.CreateCityBorders(city.Player);
         Assert.Equal(20, city.Borders.Count + city2.Borders.Count);
+    }
+
+    [Fact]
+    public void TestCityProperties()
+    {
+        var city = CreateExampleCity1();
+        city.Properties.Add("sprite.position", new Vector2() { X = 1.0f, Y = 2.0f });
+        city.Properties.Add("world.position", new Vector3() { X = 3.0f, Y = 2.0f, Z = 1.0f });
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.True(success);
+        var spritePosition = city.Properties["sprite.position"];
+        Assert.Equal(1.0f, ((Vector2)spritePosition).X);
+        Assert.Equal(2.0f, ((Vector2)spritePosition).Y);
+        var worldPosition = city.Properties["world.position"];
+        Assert.Equal(3.0f, ((Vector3)worldPosition).X);
+        Assert.Equal(2.0f, ((Vector3)worldPosition).Y);
+        Assert.Equal(1.0f, ((Vector3)worldPosition).Z);
     }
 
     private CityBase CreateExampleCity1()
