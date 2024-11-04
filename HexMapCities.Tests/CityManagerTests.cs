@@ -250,6 +250,28 @@ public class CityManagerTests
     }
 
     [Fact]
+    public void TestCreateCityBordersMoreCitiesDashedBorder()
+    {
+        var exampleMap = Enumerable.Repeat(0, 16).ToList();
+        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), _tileWidth, _tileHeight);
+        var city = CreateExampleCity1();
+        bool success = cityManager.CreateCity(city);
+        Assert.True(success);
+        var city2 = CreateExampleCity2();
+        city2.Player = 2;
+        success = cityManager.CreateCity(city2);
+        Assert.True(success);
+        cityManager.CreateCityBorders(city.Player);
+        cityManager.CreateCityBorders(city2.Player);
+        Assert.Equal(24, city.Borders.Count + city2.Borders.Count);
+        var newTile = new CubeCoordinates(1, 1, -2);
+        success = cityManager.AddCityTile(city.Id, newTile);
+        Assert.True(success);
+        cityManager.CreateCityBorders(city.Player);
+        Assert.True(city2.Borders[7].Dashed);
+    }
+
+    [Fact]
     public void TestCityProperties()
     {
         var city = CreateExampleCity1();

@@ -43,6 +43,17 @@ internal class Utils
         city.Borders = borderLines;
     }
 
+    // analysis all overlapping borderlines of adjacent cities
+    // of different players and sets dached attribute to border
+    internal static void UpdateDashedBorders(List<CityBase> cities)
+    {
+        if (cities.Count > 1 && cities[1].Borders.Count > 0)
+        {
+            cities[1].Borders[7].Dashed = true;
+            // TODO implement this
+        }
+    }
+
     // removes all duplicated border lines of all cities
     internal static void RemoveDuplicateBorders(List<CityBase> cities)
     {

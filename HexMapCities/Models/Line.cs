@@ -10,6 +10,7 @@ public class Line
 
     public Point Start { get; set; } = new();
     public Point End { get; set; } = new();
+    public bool Dashed { get; set; } = false;
 
     public override int GetHashCode()
     {

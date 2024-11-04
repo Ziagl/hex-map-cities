@@ -73,6 +73,8 @@ public class CityManager
         }
         // remove all duplicated borders (overlapping cities)
         Utils.RemoveDuplicateBorders(playerCities);
+        // update dashed borders
+        Utils.UpdateDashedBorders(new List<CityBase>(_cityStore.Values));
     }
 
     /// <summary>
