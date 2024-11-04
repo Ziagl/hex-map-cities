@@ -47,10 +47,48 @@ internal class Utils
     // of different players and sets dached attribute to border
     internal static void UpdateDashedBorders(List<CityBase> cities)
     {
-        if (cities.Count > 1 && cities[1].Borders.Count > 0)
+        // reset dashed flags
+        for(int i = 0; i < cities.Count; ++i)
         {
-            cities[1].Borders[7].Dashed = true;
-            // TODO implement this
+            for(int j = 0; j < cities[i].Borders.Count; ++j)
+            {
+                cities[i].Borders[j].Dashed = false;
+            }
+        }
+        // set dashed flag
+        for(int i = 0; i < cities.Count; ++i)
+        {
+            for(int j = 0; j < cities.Count; ++j)
+            {
+                if(i == j)
+                {
+                    continue;
+                }
+                if (cities[i].Player == cities[j].Player)
+                {
+                    continue;
+                }
+                for(int ii = 0; ii < cities[i].Borders.Count; ++ii)
+                {
+                    for(int jj = 0; jj < cities[j].Borders.Count; ++jj)
+                    {
+                        if ((cities[i].Borders[ii].Start == cities[j].Borders[jj].Start && 
+                            cities[i].Borders[ii].End == cities[j].Borders[jj].End) ||
+                            (cities[i].Borders[ii].Start == cities[j].Borders[jj].End &&
+                            cities[i].Borders[ii].End == cities[j].Borders[jj].Start))
+                        {
+                            if (cities[i].Player > cities[j].Player)
+                            {
+                                cities[i].Borders[ii].Dashed = true;
+                            }
+                            else
+                            {
+                                cities[j].Borders[jj].Dashed = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
