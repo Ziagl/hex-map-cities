@@ -161,4 +161,32 @@ public class CityManager
         }
         return foundCities;
     }
+
+    /// <summary>
+    /// Tests if given coordinates are part of given city (city tile or one of its tiles)
+    /// </summary>
+    /// <param name="cityId"></param>
+    /// <param name="coordinates"></param>
+    /// <returns></returns>
+    public bool IsTileOfCity(int cityId, CubeCoordinates coordinates)
+    {
+        var city = GetCityById(cityId);
+        // early exit is city was not found
+        if (city == null)
+        {
+            return false;
+        }
+        if (city.Position == coordinates)
+        {
+            return true;
+        }
+        foreach(var tile in city.Tiles)
+        {
+            if(tile == coordinates)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

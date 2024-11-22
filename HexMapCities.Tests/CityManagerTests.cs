@@ -289,6 +289,19 @@ public class CityManagerTests
         Assert.Equal(1.0f, ((Vector3)worldPosition).Z);
     }
 
+    [Fact]
+    public void TestIsTileOfCity()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.True(success);
+        Assert.True(cityManager.IsTileOfCity(city.Id, new CubeCoordinates(0,0,0)));
+        Assert.True(cityManager.IsTileOfCity(city.Id, new CubeCoordinates(0, 1, -1)));
+        Assert.False(cityManager.IsTileOfCity(917, new CubeCoordinates(0, 0, 0)));
+        Assert.False(cityManager.IsTileOfCity(city.Id, new CubeCoordinates(1, 0, 0)));
+    }
+
     private CityBase CreateExampleCity1()
     {
         return new CityBase
