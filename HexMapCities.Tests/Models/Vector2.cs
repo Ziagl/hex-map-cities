@@ -1,4 +1,4 @@
-﻿namespace HexMapCities.Tests.Models;
+﻿namespace com.hexagonsimulations.HexMapCities.Tests.Models;
 
 internal record Vector2
 {

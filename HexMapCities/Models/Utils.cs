@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("HexMapCities.Tests")]
 
-namespace HexMapCities.Models;
+namespace com.hexagonsimulations.HexMapCities.Models;
 
 internal class Utils
 {

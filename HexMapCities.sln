@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMapCities", "HexMapCities\HexMapCities.csproj", "{25B8D6CF-9645-4759-84B1-F0F5F0F81B2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMapCities.Tests", "HexMapCities.Tests\HexMapCities.Tests.csproj", "{895AFA71-C55B-4959-9145-7DAC40F5FC26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMapCities.Tests", "HexMapCities.Tests\HexMapCities.Tests.csproj", "{4203280F-EFE3-4751-A14D-10DB0CA8DA6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{25B8D6CF-9645-4759-84B1-F0F5F0F81B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25B8D6CF-9645-4759-84B1-F0F5F0F81B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25B8D6CF-9645-4759-84B1-F0F5F0F81B2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{895AFA71-C55B-4959-9145-7DAC40F5FC26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{895AFA71-C55B-4959-9145-7DAC40F5FC26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{895AFA71-C55B-4959-9145-7DAC40F5FC26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{895AFA71-C55B-4959-9145-7DAC40F5FC26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4203280F-EFE3-4751-A14D-10DB0CA8DA6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4203280F-EFE3-4751-A14D-10DB0CA8DA6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4203280F-EFE3-4751-A14D-10DB0CA8DA6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4203280F-EFE3-4751-A14D-10DB0CA8DA6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,36 +1,37 @@
 ﻿using com.hexagonsimulations.Geometry.Hex;
-using HexMapCities.Models;
+using com.hexagonsimulations.HexMapCities.Models;
 
-namespace HexMapCities.Tests;
+namespace com.hexagonsimulations.HexMapCities.Tests;
 
-public class UtilsTests
+[TestClass]
+public sealed class UtilsTests
 {
-    [Fact]
+    [TestMethod]
     public void TestComputeBordersOfTile()
     {
         int tileWidth = 34;
         int tileHeight = 32;
         var output = Utils.ComputeBordersOfTile(new Point(-(tileWidth / 2), -(tileHeight / 2)), tileWidth, tileHeight);
-        Assert.Equal(6, output.Count);
-        Assert.Equal(new Line(new Point(-17, -8), new Point(0, -16)), output[0]);
-        Assert.Equal(new Line(new Point(0, -16), new Point(17, -8)), output[1]);
-        Assert.Equal(new Line(new Point(17, -8), new Point(17, 8)), output[2]);
-        Assert.Equal(new Line(new Point(17, 8), new Point(0, 16)), output[3]);
-        Assert.Equal(new Line(new Point(0, 16), new Point(-17, 8)), output[4]);
-        Assert.Equal(new Line(new Point(-17, 8), new Point(-17, -8)), output[5]);
+        Assert.AreEqual(6, output.Count);
+        Assert.AreEqual(new Line(new Point(-17, -8), new Point(0, -16)), output[0]);
+        Assert.AreEqual(new Line(new Point(0, -16), new Point(17, -8)), output[1]);
+        Assert.AreEqual(new Line(new Point(17, -8), new Point(17, 8)), output[2]);
+        Assert.AreEqual(new Line(new Point(17, 8), new Point(0, 16)), output[3]);
+        Assert.AreEqual(new Line(new Point(0, 16), new Point(-17, 8)), output[4]);
+        Assert.AreEqual(new Line(new Point(-17, 8), new Point(-17, -8)), output[5]);
     }
 
-    [Fact]
+    [TestMethod]
     public void TestIsCityNeighbor()
     {
         var city = CreateExampleCity1();
         bool neighbor = Utils.IsCityNeighbor(city, new CubeCoordinates(2, 0, -2));
-        Assert.True(neighbor);
+        Assert.IsTrue(neighbor);
         neighbor = Utils.IsCityNeighbor(city, new CubeCoordinates(3, 0, -3));
-        Assert.False(neighbor);
+        Assert.IsFalse(neighbor);
     }
 
-    [Fact]
+    [TestMethod]
     public void TestComputeTilePixel()
     {
         int tileWidth = 34;
@@ -59,9 +60,9 @@ public class UtilsTests
         for (int i = 0; i < tilePositions.Count; ++i)
         {
             var tilePixel = Utils.ComputeTilePixel(cityPixel, cityPosition, tilePositions[i], tileWidth, tileHeight);
-            Assert.NotNull(tilePixel);
-            Assert.Equal(results[i].X, tilePixel.X);
-            Assert.Equal(results[i].Y, tilePixel.Y);
+            Assert.IsNotNull(tilePixel);
+            Assert.AreEqual(results[i].X, tilePixel.X);
+            Assert.AreEqual(results[i].Y, tilePixel.Y);
         }
         // advanced tests
         tilePositions = new List<CubeCoordinates>()
@@ -81,9 +82,9 @@ public class UtilsTests
         for (int i = 0; i < tilePositions.Count; ++i)
         {
             var tilePixel = Utils.ComputeTilePixel(cityPixel, cityPosition, tilePositions[i], tileWidth, tileHeight);
-            Assert.NotNull(tilePixel); 
-            Assert.Equal(results[i].X, tilePixel.X);
-            Assert.Equal(results[i].Y, tilePixel.Y);
+            Assert.IsNotNull(tilePixel);
+            Assert.AreEqual(results[i].X, tilePixel.X);
+            Assert.AreEqual(results[i].Y, tilePixel.Y);
         }
     }
 

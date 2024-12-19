@@ -1,8 +1,8 @@
 ﻿using com.hexagonsimulations.Geometry.Hex;
-using HexMapCities.Enums;
-using HexMapCities.Models;
+using com.hexagonsimulations.HexMapCities.Enums;
+using com.hexagonsimulations.HexMapCities.Models;
 
-namespace HexMapCities;
+namespace com.hexagonsimulations.HexMapCities;
 
 public class CityManager
 {

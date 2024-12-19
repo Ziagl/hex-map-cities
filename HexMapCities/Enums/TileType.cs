@@ -2,7 +2,7 @@
 
 [assembly: InternalsVisibleTo("HexMapCities.Tests")]
 
-namespace HexMapCities.Enums;
+namespace com.hexagonsimulations.HexMapCities.Enums;
 
 internal enum TileType
 {

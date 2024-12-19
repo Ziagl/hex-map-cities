@@ -1,6 +1,6 @@
 ﻿using com.hexagonsimulations.Geometry.Hex;
 
-namespace HexMapCities.Models;
+namespace com.hexagonsimulations.HexMapCities.Models;
 
 public class CityBase
 {
