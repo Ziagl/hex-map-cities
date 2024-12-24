@@ -9,8 +9,8 @@ public record BuildingType
     public int Era; // min era for this building
     public int Invention; // invention needed to build this building
     // economy
-    public Dictionary<int, int> Production = new(); // goods produced by this building
-    public Dictionary<int, int> Goods = new(); // goods needed to produce this building
+    public Tuple<int, int> Production = new(0,0); // goods produced by this building (goods id, amount)
+    public List<Tuple<int, int>> Goods = new(); // goods needed to produce this building (goods id, amount)
     public int ProductionCost; // amount of production needed to build this building
     public int PurchaseCost; // amount of gold needed to purchase this building
 }
