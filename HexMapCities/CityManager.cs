@@ -11,8 +11,9 @@ public class CityManager
     private MapData _map = new();
     private int _tileWidth = 0;
     private int _tileHeight = 0;
+    private BuildingFactory _factory;
 
-    public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, int tileWidth = 1, int tileHeight = 1)
+    public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, List<BuildingType> buildingDefinitions, int tileWidth = 1, int tileHeight = 1)
     {
         _map.Rows = rows;
         _map.Columns = columns;
@@ -33,6 +34,7 @@ public class CityManager
         }
 
         _map.Map = layerMap;
+        _factory = new BuildingFactory(buildingDefinitions);
     }
 
     /// <summary>
@@ -165,8 +167,8 @@ public class CityManager
     /// <summary>
     /// Tests if given coordinates are part of given city (city tile or one of its tiles)
     /// </summary>
-    /// <param name="cityId"></param>
-    /// <param name="coordinates"></param>
+    /// <param name="cityId">id of city</param>
+    /// <param name="coordinates">coordinates of city tile to check</param>
     /// <returns></returns>
     public bool IsTileOfCity(int cityId, CubeCoordinates coordinates)
     {
@@ -188,5 +190,63 @@ public class CityManager
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// Add given building to given city at given position.
+    /// </summary>
+    /// <param name="cityId">id of city</param>
+    /// <param name="coordinates">coordinates of city tile the building should be placed</param>
+    /// <param name="building">building that should be built</param>
+    /// <returns></returns>
+    public bool AddBuilding(int cityId, CubeCoordinates coordinates, int buildingTypeId)
+    {
+        var city = GetCityById(cityId);
+        // early exit is city was not found
+        if (city == null)
+        {
+            return false;
+        }
+        if (city.Position == coordinates)
+        {
+            return false;
+        }
+        // check if given coordinates are city tiles
+        bool cityTile = false;
+        foreach (var tile in city.Tiles)
+        {
+            if (tile == coordinates)
+            {
+                cityTile = true;
+                break;
+            }
+        }
+        if (!cityTile)
+        {
+            return false;
+        }
+        // check if there is not already a building
+        bool buildingOnSameTile = false;
+        foreach (var cityBuilding in city.Buildings)
+        {
+            if (cityBuilding.Position == coordinates)
+            {
+                buildingOnSameTile = true;
+                break;
+            }
+        }
+        if(buildingOnSameTile)
+        {
+            return false;
+        }
+        // check if building type is known
+        var building = _factory.CreateBuilding(buildingTypeId);
+        if(building is null)
+        {
+            return false;
+        }
+        building.Position = coordinates;
+        city.Buildings.Add(building);
+        return true;
     }
 }
