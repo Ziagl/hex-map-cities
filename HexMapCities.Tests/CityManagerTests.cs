@@ -311,18 +311,19 @@ public sealed class CityManagerTests
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var lumberjack = 1;
+        int palace = 1;
+        int lumberjack = 2;
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(1, 0, -1), lumberjack);
         Assert.IsTrue(success, "add first building");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(1, 0, -1), lumberjack);
         Assert.IsFalse(success, "already a building at this coordinates");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(2, 0, -2), lumberjack);
         Assert.IsFalse(success, "not a city tile");
-        success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 0, 0), lumberjack);
-        Assert.IsFalse(success, "city position");
+        success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 0, 0), palace);
+        Assert.IsTrue(success, "city position for city buildings");
         success = cityManager.AddBuilding(17, new CubeCoordinates(2, 0, -2), lumberjack);
         Assert.IsFalse(success, "city not known");
-        success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), 2);
+        success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), 3);
         Assert.IsFalse(success, "building type unknown");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), lumberjack);
         Assert.IsTrue(success, "add second building");
@@ -378,8 +379,16 @@ public sealed class CityManagerTests
         return new List<BuildingType>
         {
             new BuildingType(){
-                Name = "Lumberjack",
+                Name = "Palace",
                 Type = 1,
+                Era = 1,
+                Invention = 4,
+                ProductionCost = 150,
+                PurchaseCost = 500
+            },
+            new BuildingType(){
+                Name = "Lumberjack",
+                Type = 2,
                 Era = 1,
                 Invention = 4,
                 ProductionCost = 150,

@@ -207,10 +207,6 @@ public class CityManager
         {
             return false;
         }
-        if (city.Position == coordinates)
-        {
-            return false;
-        }
         // check if given coordinates are city tiles
         bool cityTile = false;
         foreach (var tile in city.Tiles)
@@ -221,7 +217,8 @@ public class CityManager
                 break;
             }
         }
-        if (!cityTile)
+        // skip if coordinates are not city position or any of its tiles
+        if (!(cityTile || city.Position == coordinates))
         {
             return false;
         }
@@ -229,6 +226,12 @@ public class CityManager
         bool buildingOnSameTile = false;
         foreach (var cityBuilding in city.Buildings)
         {
+            // skip if this is a city building
+            if (cityBuilding.Position == city.Position)
+            {
+                continue;
+            }
+            // check all city tiles if they are not already occupied by a building
             if (cityBuilding.Position == coordinates)
             {
                 buildingOnSameTile = true;
