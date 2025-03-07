@@ -193,6 +193,39 @@ public class CityManager
     }
 
     /// <summary>
+    /// Get tile status of given coordinates.
+    /// </summary>
+    /// <param name="coordinates">Map coordinates</param>
+    /// <returns>Returns ether TileType, the cityId this tile belongs 
+    /// or -2 if given coordinates are not on map.</returns>
+    public int GetTileStatus(CubeCoordinates coordinates)
+    {
+        var offsetCoordinates = coordinates.ToOffset();
+        // early exit if given coordinates are not on map
+        if (offsetCoordinates.x < 0 || offsetCoordinates.x >= _map.Columns ||
+            offsetCoordinates.y < 0 || offsetCoordinates.y >= _map.Rows)
+        {
+            return -2;
+        }
+        var tile = _map.Map[offsetCoordinates.y * _map.Columns + offsetCoordinates.x];
+        if(tile == (int)TileType.EMPTY)
+        {
+            // if tile is empty, it may be a city tile
+            foreach (var city in _cityStore)
+            {
+                foreach(var cityTile in city.Value.Tiles)
+                {
+                    if (cityTile == coordinates)
+                    {
+                        return city.Key;
+                    }
+                }
+            }
+        }
+        return tile;
+    }
+
+    /// <summary>
     /// Add given building to given city at given position.
     /// </summary>
     /// <param name="cityId">id of city</param>

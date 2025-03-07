@@ -329,6 +329,23 @@ public sealed class CityManagerTests
         Assert.IsTrue(success, "add second building");
     }
 
+    [TestMethod]
+    public void TestGetTileStatus()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        int value = cityManager.GetTileStatus(new CubeCoordinates(2, -1, 0));
+        Assert.IsTrue(-2 == value, $"Cordinates should be wrong. Return value: {value}.");
+        value = cityManager.GetTileStatus(new CubeCoordinates(2, 0, -1));
+        Assert.IsTrue((int)TileType.EMPTY == value, $"Tile should be empty. Return value: {value}.");
+        value = cityManager.GetTileStatus(new CubeCoordinates(0, 0, 0));
+        Assert.IsTrue(city.Id == value, $"Tile should be occupied by a city. Return value: {value}.");
+        value = cityManager.GetTileStatus(new CubeCoordinates(1, 0, -1));
+        Assert.IsTrue(city.Id == value, $"Tile should be part of city tiles. Return value: {value}.");
+    }
+
     private CityBase CreateExampleCity1()
     {
         return new CityBase
