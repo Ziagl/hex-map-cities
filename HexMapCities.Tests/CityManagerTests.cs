@@ -298,10 +298,27 @@ public sealed class CityManagerTests
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
+        // test with given city id
         Assert.IsTrue(cityManager.IsTileOfCity(city.Id, new CubeCoordinates(0, 0, 0)));
         Assert.IsTrue(cityManager.IsTileOfCity(city.Id, new CubeCoordinates(0, 1, -1)));
         Assert.IsFalse(cityManager.IsTileOfCity(917, new CubeCoordinates(0, 0, 0)));
         Assert.IsFalse(cityManager.IsTileOfCity(city.Id, new CubeCoordinates(1, 0, 0)));
+        // test without a city id
+        Assert.IsTrue(cityManager.IsTileOfCity(new CubeCoordinates(0, 0, 0)));
+        Assert.IsTrue(cityManager.IsTileOfCity(new CubeCoordinates(0, 1, -1)));
+        Assert.IsFalse(cityManager.IsTileOfCity(new CubeCoordinates(1, 0, 0)));
+    }
+
+    [TestMethod]
+    public void TestIsTileACity()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        Assert.IsTrue(cityManager.IsTileACity(new CubeCoordinates(0, 0, 0)));
+        Assert.IsFalse(cityManager.IsTileACity(new CubeCoordinates(0, 1, -1)));
+        Assert.IsFalse(cityManager.IsTileACity(new CubeCoordinates(1, 0, 0)));
     }
 
     [TestMethod]

@@ -169,7 +169,7 @@ public class CityManager
     /// </summary>
     /// <param name="cityId">id of city</param>
     /// <param name="coordinates">coordinates of city tile to check</param>
-    /// <returns></returns>
+    /// <returns>true if it is part of the city, otherwise false</returns>
     public bool IsTileOfCity(int cityId, CubeCoordinates coordinates)
     {
         var city = GetCityById(cityId);
@@ -185,6 +185,47 @@ public class CityManager
         foreach(var tile in city.Tiles)
         {
             if(tile == coordinates)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Tests if given coordinates are part of a city (city tile or one of its tiles)
+    /// </summary>
+    /// <param name="coordinates">coordinates of city tile to check</param>
+    /// <returns>true if it is part of any city, otherwise false</returns>
+    public bool IsTileOfCity(CubeCoordinates coordinates)
+    {
+        foreach (var city in _cityStore.Values)
+        {
+            if (city.Position == coordinates)
+            {
+                return true;
+            }
+            foreach (var tile in city.Tiles)
+            {
+                if (tile == coordinates)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Tests if given coordinates are a city (only check city tiles)
+    /// </summary>
+    /// <param name="coordinates">coordinates of city tile to check</param>
+    /// <returns>true if it is a city, otherwise false</returns>
+    public bool IsTileACity(CubeCoordinates coordinates)
+    {
+        foreach (var city in _cityStore.Values)
+        {
+            if (city.Position == coordinates)
             {
                 return true;
             }
