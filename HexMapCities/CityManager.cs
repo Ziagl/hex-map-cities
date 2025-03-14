@@ -196,11 +196,19 @@ public class CityManager
     /// Tests if given coordinates are part of a city (city tile or one of its tiles)
     /// </summary>
     /// <param name="coordinates">coordinates of city tile to check</param>
+    /// <param name="playerIds">optional list of players ids that cities should have</param>
     /// <returns>true if it is part of any city, otherwise false</returns>
-    public bool IsTileOfCity(CubeCoordinates coordinates)
+    public bool IsTileOfCity(CubeCoordinates coordinates, List<int>? playerIds = null)
     {
         foreach (var city in _cityStore.Values)
         {
+            if(playerIds is not null)
+            {
+                if(!playerIds.Contains(city.Player))
+                {
+                    return false;
+                }
+            }
             if (city.Position == coordinates)
             {
                 return true;

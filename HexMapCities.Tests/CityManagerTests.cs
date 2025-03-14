@@ -295,6 +295,7 @@ public sealed class CityManagerTests
     public void TestIsTileOfCity()
     {
         var city = CreateExampleCity1();
+        city.Player = 1;
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
@@ -307,6 +308,15 @@ public sealed class CityManagerTests
         Assert.IsTrue(cityManager.IsTileOfCity(new CubeCoordinates(0, 0, 0)));
         Assert.IsTrue(cityManager.IsTileOfCity(new CubeCoordinates(0, 1, -1)));
         Assert.IsFalse(cityManager.IsTileOfCity(new CubeCoordinates(1, 0, 0)));
+        // test with ignored player ids
+        var playerIds = new List<int>() { 2, 3, 17 };
+        Assert.IsFalse(cityManager.IsTileOfCity(new CubeCoordinates(0, 0, 0), playerIds));
+        Assert.IsFalse(cityManager.IsTileOfCity(new CubeCoordinates(0, 1, -1), playerIds));
+        Assert.IsFalse(cityManager.IsTileOfCity(new CubeCoordinates(1, 0, 0), playerIds));
+        playerIds = new List<int>() { 1 };
+        Assert.IsTrue(cityManager.IsTileOfCity(new CubeCoordinates(0, 0, 0), playerIds));
+        Assert.IsTrue(cityManager.IsTileOfCity(new CubeCoordinates(0, 1, -1), playerIds));
+        Assert.IsFalse(cityManager.IsTileOfCity(new CubeCoordinates(1, 0, 0), playerIds));
     }
 
     [TestMethod]
