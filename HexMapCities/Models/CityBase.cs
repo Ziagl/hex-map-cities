@@ -1,12 +1,11 @@
-﻿using com.hexagonsimulations.HexMapBase.Geometry.Hex;
+﻿using com.hexagonsimulations.Geometry.Hex.Interfaces;
+using com.hexagonsimulations.HexMapBase.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 
-public class CityBase
+public class CityBase : GameEntity
 {
     // base
-    public int Id;
-    public int Player;
     public string Name = string.Empty;
     // position
     public CubeCoordinates Position;

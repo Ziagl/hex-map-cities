@@ -1,4 +1,4 @@
-﻿using com.hexagonsimulations.HexMapBase.Geometry.Hex;
+﻿using com.hexagonsimulations.HexMapBase.Models;
 using com.hexagonsimulations.HexMapCities.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Tests;
