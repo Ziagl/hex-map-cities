@@ -48,6 +48,23 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
+    public void TestGetCityByCoordinates()
+    {
+        var exampleMap = Enumerable.Repeat(0, 16).ToList();
+        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
+        var city = CreateExampleCity1();
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        var city1 = cityManager.GetCityById(1);
+        Assert.IsNotNull(city1);
+        Assert.AreEqual("City1", city1.Name);
+        var undefinedCity = cityManager.GetCityByCoordinates(city.Position);
+        Assert.IsNotNull(undefinedCity);
+        undefinedCity = cityManager.GetCityByCoordinates(new CubeCoordinates(1, 0, 0));
+        Assert.IsNull(undefinedCity);
+    }
+
+    [TestMethod]
     public void TestGetCitiesOfPlayer()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();

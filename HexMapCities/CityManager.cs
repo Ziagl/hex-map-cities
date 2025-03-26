@@ -147,6 +147,23 @@ public class CityManager
     }
 
     /// <summary>
+    /// Get city by coordinates
+    /// </summary>
+    /// <param name="corrdinates">Coordinates to check</param>
+    /// <returns>city if found, undefined if not found</returns>
+    public CityBase? GetCityByCoordinates(CubeCoordinates coordinates)
+    {
+        foreach(var cityEntry in _cityStore)
+        {
+            if (cityEntry.Value.Position == coordinates)
+            {
+                return cityEntry.Value;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// All cities of given player number
     /// </summary>
     /// <param name="playerId">player id to search for</param>
