@@ -210,9 +210,9 @@ public class CityManager
     }
 
     /// <summary>
-    /// Tests if given coordinates are part of a city (city tile or one of its tiles)
+    /// Tests if given coordinates are part of a city (city pisition or one of its tiles)
     /// </summary>
-    /// <param name="coordinates">coordinates of city tile to check</param>
+    /// <param name="coordinates">coordinates of city position to check</param>
     /// <param name="playerIds">optional list of players ids that cities should have</param>
     /// <returns>true if it is part of any city, otherwise false</returns>
     public bool IsTileOfCity(CubeCoordinates coordinates, List<int>? playerIds = null)
@@ -242,20 +242,13 @@ public class CityManager
     }
 
     /// <summary>
-    /// Tests if given coordinates are a city (only check city tiles)
+    /// Tests if given coordinates is a city (only check city position)
     /// </summary>
-    /// <param name="coordinates">coordinates of city tile to check</param>
+    /// <param name="coordinates">coordinates of city position to check</param>
     /// <returns>true if it is a city, otherwise false</returns>
     public bool IsTileACity(CubeCoordinates coordinates)
     {
-        foreach (var city in _cityStore.Values)
-        {
-            if (city.Position == coordinates)
-            {
-                return true;
-            }
-        }
-        return false;
+        return GetCityByCoordinates(coordinates) != null;
     }
 
     /// <summary>
