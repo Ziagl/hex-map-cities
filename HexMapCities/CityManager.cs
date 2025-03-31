@@ -132,6 +132,44 @@ public class CityManager
     }
 
     /// <summary>
+    /// Get all tiles that a city can grow to
+    /// </summary>
+    /// <param name="cityId">Id of city that should grow</param>
+    /// <returns>list of tiles that can be used for AddCityTile</returns>
+    public List<CubeCoordinates> GetTilesForGrow(int cityId, int maxDistance)
+    {
+        CityBase? city = null;
+        if (!_cityStore.TryGetValue(cityId, out city))
+        {
+            return new();
+        }
+        // compute a list of all possible tiles
+        var possibleTiles = Utils.GetNeighborsForDistance(city.Position, city.Position, maxDistance);
+        // remove all tiles that are already part of any city
+        foreach(var otherCity in _cityStore.Values)
+        {
+            foreach (var tile in otherCity.Tiles)
+            {
+                possibleTiles.Remove(tile);
+            }
+            possibleTiles.Remove(otherCity.Position);
+        }
+        // remove all tiles that are not a neighbot of a city tile
+        List<CubeCoordinates> neighbors = new();
+        foreach(var tile in city.Tiles)
+        {
+            foreach(var neighbor in tile.Neighbors())
+            {
+                if(possibleTiles.Contains(neighbor) && !neighbors.Contains(neighbor))
+                {
+                    neighbors.Add(neighbor);
+                }
+            }
+        }
+        return neighbors;
+    }
+
+    /// <summary>
     /// Get city by id
     /// </summary>
     /// <param name="cityId">id of city</param>

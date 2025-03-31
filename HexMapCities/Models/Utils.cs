@@ -193,6 +193,35 @@ internal class Utils
         return false;
     }
 
+    // gets all neighbors of a given coordinate within a given distance
+    internal static List<CubeCoordinates> GetNeighborsForDistance(CubeCoordinates coordinates, CubeCoordinates origin, int maxDistance)
+    {
+        List<CubeCoordinates> neighbors = new();
+        HashSet<CubeCoordinates> visited = new() { origin };
+        Queue<CubeCoordinates> queue = new();
+        queue.Enqueue(coordinates);
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+            foreach (var neighbor in current.Neighbors())
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    int distance = CubeCoordinates.Distance(origin, neighbor);
+                    if (distance <= maxDistance)
+                    {
+                        neighbors.Add(neighbor);
+                        visited.Add(neighbor);
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
     // calculates pixel position of tile
     internal static Point? ComputeTilePixel(Point cityPixel, CubeCoordinates cityPosition, CubeCoordinates tile, int tileWidth, int tileHeight, int depth = 0, List<CubeCoordinates>? alreadyVisited = null, int maxDepth = 5)
     {

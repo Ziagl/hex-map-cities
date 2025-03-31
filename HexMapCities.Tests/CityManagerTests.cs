@@ -2,6 +2,7 @@
 using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
 using com.hexagonsimulations.HexMapCities.Tests.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace com.hexagonsimulations.HexMapCities.Tests;
 
@@ -12,7 +13,7 @@ public sealed class CityManagerTests
     private readonly int _tileHeight = 32;
 
     [TestMethod]
-    public void TestCreateCity()
+    public void CreateCity()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -22,7 +23,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityCollision()
+    public void CreateCityCollision()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         exampleMap[0] = (int)TileType.UNBUILDABLE;
@@ -33,7 +34,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestGetCityById()
+    public void GetCityById()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -48,7 +49,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestGetCityByCoordinates()
+    public void GetCityByCoordinates()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -65,7 +66,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestGetCitiesOfPlayer()
+    public void GetCitiesOfPlayer()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -88,7 +89,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityBorders()
+    public void CreateCityBorders()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -100,7 +101,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityAddTilesAndBorders()
+    public void CreateCityAddTilesAndBorders()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileHeight, _tileWidth);
@@ -120,7 +121,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityBordersMoreCities()
+    public void CreateCityBordersMoreCities()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -141,7 +142,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestTwoCitiesTouchOnOneLine()
+    public void TwoCitiesTouchOnOneLine()
     {
         var exampleMap = Enumerable.Repeat(0, 36).ToList();
         var cityManager = new CityManager(exampleMap, 6, 6, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -167,7 +168,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestAddCityTile()
+    public void AddCityTile()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -186,7 +187,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestAddCityTileNotValid()
+    public void AddCityTileNotValid()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -210,7 +211,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestAddCityTileCollisionWithOtherCity()
+    public void AddCityTileCollisionWithOtherCity()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
@@ -231,7 +232,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityBordersAfterTileWasAdded()
+    public void CreateCityBordersAfterTileWasAdded()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -248,7 +249,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityBordersMoreCitiesAndAddTile()
+    public void CreateCityBordersMoreCitiesAndAddTile()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -269,7 +270,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCreateCityBordersMoreCitiesDashedBorder()
+    public void CreateCityBordersMoreCitiesDashedBorder()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -291,7 +292,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestCityProperties()
+    public void CityProperties()
     {
         var city = CreateExampleCity1();
         city.Properties.Add("sprite.position", new Vector2() { X = 1.0f, Y = 2.0f });
@@ -309,7 +310,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestIsTileOfCity()
+    public void IsTileOfCity()
     {
         var city = CreateExampleCity1();
         city.Player = 1;
@@ -337,7 +338,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestIsTileACity()
+    public void IsTileACity()
     {
         var city = CreateExampleCity1();
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -349,7 +350,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestAddBuilding()
+    public void AddBuilding()
     {
         var city = CreateExampleCity1();
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
@@ -374,7 +375,7 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void TestGetTileStatus()
+    public void GetTileStatus()
     {
         var city = CreateExampleCity1();
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
@@ -388,6 +389,20 @@ public sealed class CityManagerTests
         Assert.IsTrue(city.Id == value, $"Tile should be occupied by a city. Return value: {value}.");
         value = cityManager.GetTileStatus(new CubeCoordinates(1, 0, -1));
         Assert.IsTrue(city.Id == value, $"Tile should be part of city tiles. Return value: {value}.");
+    }
+
+    [TestMethod]
+    public void GetTilesForGrow()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        var city2 = CreateExampleCity2();
+        success = cityManager.CreateCity(city2);
+        Assert.IsTrue(success);
+        var possibleTiles = cityManager.GetTilesForGrow(city.Id, 3);
+        Assert.AreEqual(6, possibleTiles.Count);
     }
 
     private CityBase CreateExampleCity1()

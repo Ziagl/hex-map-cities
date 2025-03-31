@@ -88,6 +88,18 @@ public sealed class UtilsTests
         }
     }
 
+    [TestMethod]
+    public void TestGetNeighborsForDistance()
+    {
+        var city = CreateExampleCity1();
+        var neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 1);
+        Assert.AreEqual(6, neighbors.Count);
+        neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 2);
+        Assert.AreEqual(18, neighbors.Count);
+        neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 3);
+        Assert.AreEqual(36, neighbors.Count);
+    }
+
     private CityBase CreateExampleCity1()
     {
         return new CityBase

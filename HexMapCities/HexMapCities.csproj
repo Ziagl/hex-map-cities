@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>Hexagon Cities Data and Logic Library</Title>
-    <Version>0.3.8</Version>
+    <Version>0.3.9</Version>
     <Authors>Werner Ziegelwanger</Authors>
     <Company>Hexagon Simulations</Company>
     <Description>A library for data and logic for cities of tiled based games.
