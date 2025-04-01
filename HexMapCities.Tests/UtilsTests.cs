@@ -7,7 +7,7 @@ namespace com.hexagonsimulations.HexMapCities.Tests;
 public sealed class UtilsTests
 {
     [TestMethod]
-    public void TestComputeBordersOfTile()
+    public void ComputeBordersOfTile()
     {
         int tileWidth = 34;
         int tileHeight = 32;
@@ -22,7 +22,7 @@ public sealed class UtilsTests
     }
 
     [TestMethod]
-    public void TestIsCityNeighbor()
+    public void IsCityNeighbor()
     {
         var city = CreateExampleCity1();
         bool neighbor = Utils.IsCityNeighbor(city, new CubeCoordinates(2, 0, -2));
@@ -32,7 +32,7 @@ public sealed class UtilsTests
     }
 
     [TestMethod]
-    public void TestComputeTilePixel()
+    public void ComputeTilePixel()
     {
         int tileWidth = 34;
         int tileHeight = 32;
@@ -89,7 +89,7 @@ public sealed class UtilsTests
     }
 
     [TestMethod]
-    public void TestGetNeighborsForDistance()
+    public void GetNeighborsForDistance()
     {
         var city = CreateExampleCity1();
         var neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 1);

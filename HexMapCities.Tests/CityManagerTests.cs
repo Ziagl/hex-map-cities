@@ -402,7 +402,8 @@ public sealed class CityManagerTests
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
         var possibleTiles = cityManager.GetTilesForGrow(city.Id, 3);
-        Assert.AreEqual(6, possibleTiles.Count);
+        Assert.AreEqual(2, possibleTiles[1].Count);
+        Assert.AreEqual(4, possibleTiles[2].Count);
     }
 
     private CityBase CreateExampleCity1()

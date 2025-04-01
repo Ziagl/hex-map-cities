@@ -135,8 +135,8 @@ public class CityManager
     /// Get all tiles that a city can grow to
     /// </summary>
     /// <param name="cityId">Id of city that should grow</param>
-    /// <returns>list of tiles that can be used for AddCityTile</returns>
-    public List<CubeCoordinates> GetTilesForGrow(int cityId, int maxDistance)
+    /// <returns>dictionary of all distances and list of tiles that can be used for AddCityTile</returns>
+    public Dictionary<int, List<CubeCoordinates>> GetTilesForGrow(int cityId, int maxDistance)
     {
         CityBase? city = null;
         if (!_cityStore.TryGetValue(cityId, out city))
@@ -146,7 +146,7 @@ public class CityManager
         // compute a list of all possible tiles
         var possibleTiles = Utils.GetNeighborsForDistance(city.Position, city.Position, maxDistance);
         // remove all tiles that are already part of any city
-        foreach(var otherCity in _cityStore.Values)
+        foreach (var otherCity in _cityStore.Values)
         {
             foreach (var tile in otherCity.Tiles)
             {
@@ -154,15 +154,25 @@ public class CityManager
             }
             possibleTiles.Remove(otherCity.Position);
         }
-        // remove all tiles that are not a neighbot of a city tile
-        List<CubeCoordinates> neighbors = new();
-        foreach(var tile in city.Tiles)
+        // remove all tiles that are not a neighbor of a city tile
+        Dictionary<int, List<CubeCoordinates>> neighbors = new();
+        foreach (var tile in city.Tiles)
         {
-            foreach(var neighbor in tile.Neighbors())
+            foreach (var neighbor in tile.Neighbors())
             {
-                if(possibleTiles.Contains(neighbor) && !neighbors.Contains(neighbor))
+                int distance = CubeCoordinates.Distance(city.Position, neighbor);
+
+                if (distance == 0)
                 {
-                    neighbors.Add(neighbor);
+                    continue;
+                }
+                if (!neighbors.ContainsKey(distance))
+                {
+                    neighbors[distance] = new List<CubeCoordinates>();
+                }
+                if (possibleTiles.Contains(neighbor) && !neighbors[distance].Contains(neighbor))
+                {
+                    neighbors[distance].Add(neighbor);
                 }
             }
         }
