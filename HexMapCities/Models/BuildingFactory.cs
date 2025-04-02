@@ -22,7 +22,11 @@ internal class BuildingFactory
             building.Era = definition.Era;
             building.Invention = definition.Invention;
             building.Production = definition.Production;
-            building.Goods = definition.Goods;
+            building.Goods_Production = definition.Goods_Production;
+            building.Goods_Cost = definition.Goods_Cost;
+            building.Gold = definition.Gold;
+            building.Food = definition.Food;
+            building.Production = definition.Production;
             building.ProductionCost = definition.ProductionCost;
             building.PurchaseCost = definition.PurchaseCost;
             return building;
