@@ -26,6 +26,7 @@ internal class BuildingFactory
             building.Production = definition.Production;
             building.Gold = definition.Gold;
             building.Science = definition.Science;
+            building.Citizens = definition.Citizens;
             building.ProductionCost = definition.ProductionCost;
             building.PurchaseCost = definition.PurchaseCost;
             return building;

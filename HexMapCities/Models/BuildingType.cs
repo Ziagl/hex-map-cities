@@ -16,6 +16,7 @@ public record BuildingType
     public int Production; // production of this building
     public int Gold; // gold produced by this building
     public int Science; // science produced by this building
+    public int Citizens; // number of citizens this building habitats
     public int ProductionCost; // amount of production needed to build this building
     public int PurchaseCost; // amount of gold needed to purchase this building
 }
