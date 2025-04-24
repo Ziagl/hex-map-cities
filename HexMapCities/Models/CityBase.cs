@@ -14,10 +14,11 @@ public class CityBase : ICombatEntity
     public string Name { get; set; } = string.Empty;
     // combat
     public int WeaponType { get; set; } // type of weapon/combat of this unit (infantry, cavalry, ...)
-    public int Attack { get; set; } // attack points (damage in fight)
+    public int CombatStrength { get; set; } // attack points (damage in fight)
     public int RangedAttack { get; set; } // ranged attack points (damage of airstrike)
-    public int Defense { get; set; } // defence points (how much damage is reduced)
     public int Range { get; set; } // attack range (how far can this unit attack)
+    // random number
+    public int Seed { get; set; } // random number seed (for random number generation)
     // position
     public CubeCoordinates Position { get; set; }
     public List<CubeCoordinates> Tiles { get; set; } = new();
