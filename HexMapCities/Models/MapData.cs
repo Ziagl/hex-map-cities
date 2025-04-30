@@ -1,8 +1,8 @@
 ﻿namespace com.hexagonsimulations.HexMapCities.Models;
 
-public record MapData
+internal record MapData
 {
-    public List<int> Map { get; set; } = new();
-    public int Rows { get; set; }
-    public int Columns { get; set; }
+    internal List<int> Map { get; set; } = new();
+    internal int Rows { get; set; }
+    internal int Columns { get; set; }
 }
