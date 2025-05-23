@@ -15,6 +15,8 @@ internal class BuildingFactory
         {
             var building = new BuildingBase();
             building.Name = definition.Name;
+            building.MapImages = definition.MapImages;
+            building.UIImage = definition.UIImage;
             building.Description = definition.Description;
             building.Type = definition.Type;
             building.Era = definition.Era;

@@ -4,7 +4,8 @@ public record BuildingType
 {
     // base
     public string Name = string.Empty; // the name of this building type
-    public List<string> Images = new(); // representation of this building as image in UI and/or map
+    public List<string> MapImages = new(); // representation of this building on map
+    public string UIImage = string.Empty;  // building UI image
     public string Description = string.Empty; // short description for what this building is used
     public int Type; // the type of this unit (value of an enum?)
     public int Era; // min era for this building
