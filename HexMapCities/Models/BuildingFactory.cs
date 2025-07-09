@@ -21,6 +21,8 @@ internal class BuildingFactory
             building.Type = definition.Type;
             building.Era = definition.Era;
             building.Invention = definition.Invention;
+            building.FoodLevel = definition.FoodLevel;
+            building.ProductionLevel = definition.ProductionLevel;
             building.Production = definition.Production;
             building.Goods_Production = definition.Goods_Production;
             building.Goods_Cost = definition.Goods_Cost;
@@ -31,6 +33,7 @@ internal class BuildingFactory
             building.Citizens = definition.Citizens;
             building.ProductionCost = definition.ProductionCost;
             building.PurchaseCost = definition.PurchaseCost;
+            building.UpkeepCost = definition.UpkeepCost;
             return building;
         }
         else
