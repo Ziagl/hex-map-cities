@@ -60,8 +60,10 @@ public sealed class CityManagerTests
         Assert.AreEqual("City1", city1.Name);
         var undefinedCity = cityManager.GetCityByCoordinates(city.Position);
         Assert.IsNotNull(undefinedCity);
-        undefinedCity = cityManager.GetCityByCoordinates(new CubeCoordinates(1, 0, 0));
+        undefinedCity = cityManager.GetCityByCoordinates(new CubeCoordinates(1, 0, -1));
         Assert.IsNull(undefinedCity);
+        undefinedCity = cityManager.GetCityByCoordinates(new CubeCoordinates(1, 0, -1), true);
+        Assert.IsNotNull(undefinedCity);
     }
 
     [TestMethod]

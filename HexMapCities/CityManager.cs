@@ -198,14 +198,25 @@ public class CityManager
     /// Get city by coordinates
     /// </summary>
     /// <param name="corrdinates">Coordinates to check</param>
-    /// <returns>city if found, undefined if not found</returns>
-    public CityBase? GetCityByCoordinates(CubeCoordinates coordinates)
+    /// <param name="includeTiles">Flag if also city tiles should be checked</param>
+    /// <returns>city if found, null if not found</returns>
+    public CityBase? GetCityByCoordinates(CubeCoordinates coordinates, bool includeTiles = false)
     {
-        foreach(var cityEntry in _cityStore)
+        foreach (var cityEntry in _cityStore)
         {
             if (cityEntry.Value.Position == coordinates)
             {
                 return cityEntry.Value;
+            }
+            if (includeTiles)
+            {
+                foreach (var tile in cityEntry.Value.Tiles)
+                {
+                    if (tile == coordinates)
+                    {
+                        return cityEntry.Value;
+                    }
+                }
             }
         }
         return null;
@@ -258,7 +269,7 @@ public class CityManager
     }
 
     /// <summary>
-    /// Tests if given coordinates are part of a city (city pisition or one of its tiles)
+    /// Tests if given coordinates are part of a city (city position or one of its tiles)
     /// </summary>
     /// <param name="coordinates">coordinates of city position to check</param>
     /// <param name="playerIds">optional list of players ids that cities should have</param>
