@@ -11,7 +11,7 @@ public class CityManager
     private MapData _map = new();
     private int _tileWidth = 0;
     private int _tileHeight = 0;
-    private BuildingFactory _factory;
+    private List<BuildingType> _buildingDefinitions = new();
 
     public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, List<BuildingType> buildingDefinitions, int tileWidth = 1, int tileHeight = 1)
     {
@@ -34,7 +34,7 @@ public class CityManager
         }
 
         _map.Map = layerMap;
-        _factory = new BuildingFactory(buildingDefinitions);
+        _buildingDefinitions = buildingDefinitions;
     }
 
     /// <summary>
@@ -348,13 +348,18 @@ public class CityManager
     /// </summary>
     /// <param name="cityId">id of city</param>
     /// <param name="coordinates">coordinates of city tile the building should be placed</param>
-    /// <param name="building">building that should be built</param>
-    /// <returns></returns>
+    /// <param name="buildingTypeId">building id that should be built</param>
+    /// <returns>true if building was built, false otherwise</returns>
     public bool AddBuilding(int cityId, CubeCoordinates coordinates, int buildingTypeId)
     {
         var city = GetCityById(cityId);
         // early exit is city was not found
         if (city == null)
+        {
+            return false;
+        }
+        // early exit if buildingTypeId is not valid
+        if(buildingTypeId < 1 || buildingTypeId > _buildingDefinitions.Count)
         {
             return false;
         }
@@ -394,7 +399,7 @@ public class CityManager
             return false;
         }
         // check if building type is known
-        var building = _factory.CreateBuilding(buildingTypeId);
+        var building = BuildingFactory.CreateBuilding(_buildingDefinitions[buildingTypeId-1]);
         if(building is null)
         {
             return false;
