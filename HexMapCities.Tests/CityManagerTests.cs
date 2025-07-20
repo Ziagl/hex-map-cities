@@ -2,6 +2,7 @@
 using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
 using com.hexagonsimulations.HexMapCities.Tests.Models;
+using HexMapCities.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Tests;
 
@@ -405,6 +406,45 @@ public sealed class CityManagerTests
         var possibleTiles = cityManager.GetTilesForGrow(city.Id, 3);
         Assert.AreEqual(2, possibleTiles[1].Count);
         Assert.AreEqual(4, possibleTiles[2].Count);
+    }
+
+    [TestMethod]
+    public void Inhabitants()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant);
+        Assert.IsTrue(success);
+        Assert.AreEqual(1, city.Inhabitants.Count);
+        inhabitant.Upgrade(new List<InhabitantNeed>());
+        Assert.IsTrue(inhabitant.Type == 2, "Inhabitant should be upgraded to type 2.");
+        inhabitant.Downgrade(new List<InhabitantNeed>());
+        Assert.IsTrue(inhabitant.Type == 1, "Inhabitant should be downgraded to type 1.");
+    }
+
+    [TestMethod]
+    public void InhabitantNeeds()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        var needs = new List<InhabitantNeed>
+        {
+            new InhabitantNeed(1, 2, 10), // Type 1, every 2 rounds, penalty 10
+        };
+        var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), needs);
+        success = cityManager.AddInhabitant(city.Id, inhabitant);
+        Assert.IsTrue(success);
+        inhabitant.UpdateNeeds(1); // Round 1, no needs should be satisfied
+        Assert.AreEqual(100, inhabitant.Satisfaction, "Satisfaction should be 100 at round 1.");
+        inhabitant.UpdateNeeds(2); // Round 2, need should be satisfied
+        Assert.AreEqual(90, inhabitant.Satisfaction, "Satisfaction should be 90 at round 2.");
+        inhabitant.SatisfyNeed(1, 3); // Satisfy need at round 2
+        Assert.AreEqual(100, inhabitant.Satisfaction, "Satisfaction should be 100 after satisfying need at round 3.");
     }
 
     private CityBase CreateExampleCity1()

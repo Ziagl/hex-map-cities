@@ -1,5 +1,6 @@
 ﻿using com.hexagonsimulations.HexMapBase.Interfaces;
 using com.hexagonsimulations.HexMapBase.Models;
+using HexMapCities.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 
@@ -28,6 +29,8 @@ public class CityBase : ICombatEntity
     public List<Line> Borders { get; set; } = new();       // border lines in absolute pixels
     // buildings
     public List<BuildingBase> Buildings { get; set; } = new();
+    // inhabitants
+    public List<InhabitantBase> Inhabitants { get; set; } = new();
     // properties
     public Dictionary<string, object> Properties { get; set; } = new();
 }

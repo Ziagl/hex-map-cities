@@ -1,6 +1,7 @@
 ﻿using com.hexagonsimulations.HexMapBase.Models;
 using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
+using HexMapCities.Models;
 
 namespace com.hexagonsimulations.HexMapCities;
 
@@ -406,6 +407,29 @@ public class CityManager
         }
         building.Position = coordinates;
         city.Buildings.Add(building);
+        return true;
+    }
+
+    /// <summary>
+    /// Adds an inhabitant to a city.
+    /// </summary>
+    /// <param name="cityId">id of city</param>
+    /// <param name="inhabitant">already generated inhabitant instance</param>
+    /// <returns>true if inhabitant was added otherwise false</returns>
+    internal bool AddInhabitant(int cityId, InhabitantBase inhabitant)
+    {
+        var city = GetCityById(cityId);
+        // early exit is city was not found
+        if (city == null)
+        {
+            return false;
+        }
+        // early exit if inhabitant position is not part of this city
+        if (!IsTileOfCity(cityId, inhabitant.Position))
+        {
+            return false;
+        }
+        city.Inhabitants.Add(inhabitant);
         return true;
     }
 }
