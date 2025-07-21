@@ -416,7 +416,7 @@ public class CityManager
     /// <param name="cityId">id of city</param>
     /// <param name="inhabitant">already generated inhabitant instance</param>
     /// <returns>true if inhabitant was added otherwise false</returns>
-    internal bool AddInhabitant(int cityId, InhabitantBase inhabitant)
+    public bool AddInhabitant(int cityId, InhabitantBase inhabitant)
     {
         var city = GetCityById(cityId);
         // early exit is city was not found
