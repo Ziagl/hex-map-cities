@@ -2,14 +2,14 @@
 
 public class InhabitantNeed
 {
-    public int Type { get; init; }
+    public List<int> Types { get; init; }   // list of types this need can be satisfied with (OR)
     public int Interval { get; init; } // Every how many rounds the need becomes active
     public int LastSatisfiedRound { get; private set; }
     public int SatisfactionPenalty { get; init; }
 
-    public InhabitantNeed(int type, int interval, int satisfactionPenalty = 0)
+    public InhabitantNeed(List<int> types, int interval, int satisfactionPenalty = 0)
     {
-        Type =  type;
+        Types =  types;
         Interval = interval;
         SatisfactionPenalty = satisfactionPenalty;
         LastSatisfiedRound = 0;

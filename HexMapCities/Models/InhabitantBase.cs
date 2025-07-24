@@ -43,7 +43,7 @@ public class InhabitantBase
     /// <param name="currentRound">Current round number.</param>
     public void SatisfyNeed(int type, int currentRound)
     {
-        var need = Needs.FirstOrDefault(n => n.Type == type && n.IsActive(currentRound));
+        var need = Needs.FirstOrDefault(n => n.Types.Contains(type) && n.IsActive(currentRound));
         if (need != null)
         {
             need.Satisfy(currentRound);

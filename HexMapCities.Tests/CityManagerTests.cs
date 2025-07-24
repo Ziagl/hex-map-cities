@@ -434,7 +434,7 @@ public sealed class CityManagerTests
         Assert.IsTrue(success);
         var needs = new List<InhabitantNeed>
         {
-            new InhabitantNeed(1, 2, 10), // Type 1, every 2 rounds, penalty 10
+            new InhabitantNeed(new List<int>(){ 1, 2 }, 2, 10), // Type 1 or 2, every 2 rounds, penalty 10
         };
         var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), needs);
         success = cityManager.AddInhabitant(city.Id, inhabitant);
@@ -443,7 +443,7 @@ public sealed class CityManagerTests
         Assert.AreEqual(100, inhabitant.Satisfaction, "Satisfaction should be 100 at round 1.");
         inhabitant.UpdateNeeds(2); // Round 2, need should be satisfied
         Assert.AreEqual(90, inhabitant.Satisfaction, "Satisfaction should be 90 at round 2.");
-        inhabitant.SatisfyNeed(1, 3); // Satisfy need at round 2
+        inhabitant.SatisfyNeed(2, 3); // Satisfy need with type 2 at round 2
         Assert.AreEqual(100, inhabitant.Satisfaction, "Satisfaction should be 100 after satisfying need at round 3.");
     }
 
