@@ -16,13 +16,12 @@ public static class BuildingFactory
             building.FoodLevel = definition.FoodLevel;
             building.ProductionLevel = definition.ProductionLevel;
             building.Production = definition.Production;
-            building.Goods_Production = definition.Goods_Production;
-            building.Goods_Cost = definition.Goods_Cost;
             building.Food = definition.Food;
             building.Production = definition.Production;
             building.Gold = definition.Gold;
             building.Science = definition.Science;
             building.Citizens = definition.Citizens;
+            building.GoodsCost = definition.GoodsCost;
             building.ProductionCost = definition.ProductionCost;
             building.PurchaseCost = definition.PurchaseCost;
             building.UpkeepCost = definition.UpkeepCost;
