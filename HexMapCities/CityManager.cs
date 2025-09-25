@@ -424,12 +424,65 @@ public class CityManager
         {
             return false;
         }
-        // early exit if inhabitant position is not part of this city
+        // exit if inhabitant position is not part of this city
         if (!IsTileOfCity(cityId, inhabitant.Position))
         {
             return false;
         }
+        // exit if there are not enough free dwellings on position
+        var building = GetBuildingOfPosition(inhabitant.Position);
+        if (building is null)
+        {
+            return false;   // no building on this position
+        }
+        var otherInhabitants = GetInhabitantsOfPosition(inhabitant.Position);
+        if(building.Citizens - otherInhabitants.Count <= 0)
+        {
+            return false;   // not enough free dwellings
+        }
         city.Inhabitants.Add(inhabitant);
         return true;
+    }
+
+    /// <summary>
+    /// Retrieves the building located at the specified coordinates, if any.
+    /// </summary>
+    /// <param name="coordinates">Coordinates to check</param>
+    /// <returns>The <see cref="BuildingBase"/> instance located at the specified coordinates, or <see langword="null"/>  if no
+    /// building exists at the given position.</returns>
+    public BuildingBase? GetBuildingOfPosition(CubeCoordinates coordinates)
+    {
+        foreach(var city in _cityStore.Values)
+        {
+            foreach(var building in city.Buildings)
+            {
+                if(building.Position == coordinates)
+                {
+                    return building;
+                }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Gets a list of inhabitants of the given coordinates.
+    /// </summary>
+    /// <param name="coordinates">Coordinates to check</param>
+    /// <returns>list of found inhabitants</returns>
+    public List<InhabitantBase> GetInhabitantsOfPosition(CubeCoordinates coordinates)
+    {
+        List<InhabitantBase> inhabitants = new();
+        foreach(var city in _cityStore.Values)
+        {
+            foreach(var inhabitant in city.Inhabitants)
+            {
+                if(inhabitant.Position == coordinates)
+                {
+                    inhabitants.Add(inhabitant);
+                }
+            }
+        }
+        return inhabitants;
     }
 }

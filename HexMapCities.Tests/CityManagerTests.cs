@@ -415,6 +415,7 @@ public sealed class CityManagerTests
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
+        city.Buildings.Add(CreateExampleBuilding(city.Position));
         var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant);
         Assert.IsTrue(success);
@@ -426,12 +427,44 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
+    public void InhabitantsOfPosition()
+    {
+        var city = CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        city.Buildings.Add(CreateExampleBuilding(new CubeCoordinates(1, 0, -1)));
+        city.Buildings.Add(CreateExampleBuilding(new CubeCoordinates(0, 0, 0)));
+        var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant);
+        Assert.IsTrue(success);
+        var inhabitant1 = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant1);
+        Assert.IsTrue(success);
+        var inhabitant2 = new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant2);
+        Assert.IsTrue(success);
+        Assert.IsTrue(2 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(0, 0, 0)).Count, "There should be 2 inhabitants at this position.");
+        Assert.IsTrue(0 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(2, 0, -2)).Count, "There should be no inhabitants at this position.");
+        Assert.IsTrue(1 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(1, 0, -1)).Count, "There should be 1 inhabitant at this position.");
+        // test building capacity
+        var inhabitant3 = new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant3);
+        Assert.IsTrue(success);
+        Assert.IsTrue(2 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(1, 0, -1)).Count, "There should be 2 inhabitants at this position.");
+        var inhabitant4 = new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant4);
+        Assert.IsFalse(success, "This should not be possible, because there are already 2 Inhabitants in this building.");
+    }
+
+    [TestMethod]
     public void InhabitantNeeds()
     {
         var city = CreateExampleCity1();
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
+        city.Buildings.Add(CreateExampleBuilding(city.Position));
         var needs = new List<InhabitantNeed>
         {
             new InhabitantNeed(new List<int>(){ 1, 2 }, 2, 10), // Type 1 or 2, every 2 rounds, penalty 10
@@ -474,6 +507,16 @@ public sealed class CityManagerTests
             PositionPixel = new(102, 0),
             TilesPixel = new() { new Point(68, 0), new Point(85, 24) },
             Borders = new(),
+        };
+    }
+
+    private BuildingBase CreateExampleBuilding(CubeCoordinates coordinates)
+    {
+        return new BuildingBase
+        {
+            Type = 1,
+            Position = coordinates,
+            Citizens = 2
         };
     }
 

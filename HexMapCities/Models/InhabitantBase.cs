@@ -5,7 +5,7 @@ namespace HexMapCities.Models;
 public class InhabitantBase
 {
     public int Type { get; private set; }
-    public CubeCoordinates Position { get; init; }
+    public CubeCoordinates Position { get; init; }  // the position of the building this inhabitant lives
     public List<InhabitantNeed> Needs { get; private set; }
     public int Satisfaction { get; private set; }
 
