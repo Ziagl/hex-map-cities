@@ -1,4 +1,6 @@
-﻿using com.hexagonsimulations.HexMapBase.Models;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using com.hexagonsimulations.HexMapBase.Models;
 using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
 using HexMapCities.Models;
@@ -13,6 +15,8 @@ public class CityManager
     private int _tileWidth = 0;
     private int _tileHeight = 0;
     private List<BuildingType> _buildingDefinitions = new();
+
+    private CityManager() { }
 
     public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, List<BuildingType> buildingDefinitions, int tileWidth = 1, int tileHeight = 1)
     {
@@ -198,7 +202,7 @@ public class CityManager
     /// <summary>
     /// Get city by coordinates
     /// </summary>
-    /// <param name="corrdinates">Coordinates to check</param>
+    /// <param name="coordinates">Coordinates to check</param>
     /// <param name="includeTiles">Flag if also city tiles should be checked</param>
     /// <returns>city if found, null if not found</returns>
     public CityBase? GetCityByCoordinates(CubeCoordinates coordinates, bool includeTiles = false)
@@ -484,5 +488,104 @@ public class CityManager
             }
         }
         return inhabitants;
+    }
+
+    private sealed class CityManagerState
+    {
+        public int LastCityStoreId { get; set; }
+        public int TileWidth { get; set; }
+        public int TileHeight { get; set; }
+        public MapData MapData { get; set; } = new();
+        public Dictionary<int, CityBase> CityStore { get; set; } = new();
+        public List<BuildingType> BuildingDefinitions { get; set; } = new();
+    }
+
+    private static readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        WriteIndented = false,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        // Preserve references in case objects (like coordinates) are reused.
+        ReferenceHandler = ReferenceHandler.Preserve,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    };
+
+    /// <summary>
+    /// Serialize current CityManager state to JSON.
+    /// </summary>
+    public string ToJson(JsonSerializerOptions? options = null)
+    {
+        var state = new CityManagerState
+        {
+            LastCityStoreId = _lastCityStoreId,
+            TileWidth = _tileWidth,
+            TileHeight = _tileHeight,
+            MapData = _map,
+            CityStore = _cityStore,
+            BuildingDefinitions = _buildingDefinitions
+        };
+        return JsonSerializer.Serialize(state, options ?? _jsonOptions);
+    }
+
+    /// <summary>
+    /// Deserialize a CityManager from JSON.
+    /// </summary>
+    public static CityManager FromJson(string json, JsonSerializerOptions? options = null)
+    {
+        var state = JsonSerializer.Deserialize<CityManagerState>(json, options ?? _jsonOptions)
+                    ?? throw new InvalidOperationException("Failed to deserialize CityManagerState.");
+        var manager = new CityManager
+        {
+            _lastCityStoreId = state.LastCityStoreId,
+            _tileWidth = state.TileWidth,
+            _tileHeight = state.TileHeight,
+            _map = state.MapData ?? new MapData(),
+            _cityStore = state.CityStore ?? new(),
+            _buildingDefinitions = state.BuildingDefinitions ?? new()
+        };
+        return manager;
+    }
+
+    /// <summary>
+    /// Writes the state of this CityManager instance to a BinaryWriter.
+    /// A version number is written first to allow future format evolution.
+    /// Currently the payload is the JSON representation (length prefixed UTF-8).
+    /// </summary>
+    public void Write(BinaryWriter writer)
+    {
+        if (writer is null) throw new ArgumentNullException(nameof(writer));
+
+        const int formatVersion = 1;
+        writer.Write(formatVersion);
+
+        var json = ToJson();
+        var bytes = System.Text.Encoding.UTF8.GetBytes(json);
+        writer.Write(bytes.Length);
+        writer.Write(bytes);
+    }
+
+    /// <summary>
+    /// Reads a CityManager instance from a BinaryReader created by Write.
+    /// </summary>
+    public static CityManager Read(BinaryReader reader)
+    {
+        if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+        int formatVersion = reader.ReadInt32();
+        if (formatVersion != 1)
+        {
+            throw new NotSupportedException($"Unsupported CityManager binary format version {formatVersion}.");
+        }
+
+        int length = reader.ReadInt32();
+        if (length < 0) throw new InvalidDataException("Negative payload length encountered.");
+
+        var bytes = reader.ReadBytes(length);
+        if (bytes.Length != length)
+        {
+            throw new EndOfStreamException("Unexpected end of stream while reading CityManager payload.");
+        }
+
+        var json = System.Text.Encoding.UTF8.GetString(bytes);
+        return FromJson(json);
     }
 }

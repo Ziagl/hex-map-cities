@@ -17,7 +17,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
     }
@@ -28,7 +28,7 @@ public sealed class CityManagerTests
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         exampleMap[0] = (int)TileType.UNBUILDABLE;
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>() { (int)TileType.UNBUILDABLE }, new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsFalse(success);
     }
@@ -38,7 +38,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         var city1 = cityManager.GetCityById(1);
@@ -53,7 +53,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         var city1 = cityManager.GetCityById(1);
@@ -72,13 +72,13 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity2();
+        var city2 = TestUtils.CreateExampleCity2();
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
-        var city3 = CreateExampleCity1();
+        var city3 = TestUtils.CreateExampleCity1();
         city3.Name = "City3";
         city3.Position = new CubeCoordinates(0, 2, -2);
         city3.Player = 2;
@@ -95,7 +95,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         cityManager.CreateCityBorders(city.Player);
@@ -107,7 +107,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileHeight, _tileWidth);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         var tiles = city.Tiles;
         city.PositionPixel = new Point(16, 17);
         city.Tiles = new();
@@ -127,10 +127,10 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity1();
+        var city2 = TestUtils.CreateExampleCity1();
         city2.Position = new CubeCoordinates(2, 1, -3);
         city2.Tiles = new List<CubeCoordinates>() { new CubeCoordinates(2, 0, -2), new CubeCoordinates(3, 0, -3), new CubeCoordinates(1, 1, -2), new CubeCoordinates(1, 2, -3), new CubeCoordinates(2, 2, -4) };
         city2.PositionPixel = new(85, 24);
@@ -148,10 +148,10 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 36).ToList();
         var cityManager = new CityManager(exampleMap, 6, 6, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity1();
+        var city2 = TestUtils.CreateExampleCity1();
         city2.Position = new CubeCoordinates(0, 3, -3);
         city2.PositionPixel = new(51, 72);
         city2.Tiles = new();
@@ -174,7 +174,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         // add tile to which is already part of city
@@ -193,7 +193,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         Assert.AreEqual(2, city.Tiles.Count);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
@@ -217,10 +217,10 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity2();
+        var city2 = TestUtils.CreateExampleCity2();
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
         // add tile to which is already part of city
@@ -238,7 +238,7 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         cityManager.CreateCityBorders(city.Player);
@@ -255,10 +255,10 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity2();
+        var city2 = TestUtils.CreateExampleCity2();
         city2.Player = 1;
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
@@ -276,10 +276,10 @@ public sealed class CityManagerTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity2();
+        var city2 = TestUtils.CreateExampleCity2();
         city2.Player = 2;
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
@@ -296,7 +296,7 @@ public sealed class CityManagerTests
     [TestMethod]
     public void CityProperties()
     {
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         city.Properties.Add("sprite.position", new Vector2() { X = 1.0f, Y = 2.0f });
         city.Properties.Add("world.position", new Vector3() { X = 3.0f, Y = 2.0f, Z = 1.0f });
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
@@ -314,7 +314,7 @@ public sealed class CityManagerTests
     [TestMethod]
     public void IsTileOfCity()
     {
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         city.Player = 1;
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
@@ -342,7 +342,7 @@ public sealed class CityManagerTests
     [TestMethod]
     public void IsTileACity()
     {
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), new List<BuildingType>(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
@@ -354,8 +354,8 @@ public sealed class CityManagerTests
     [TestMethod]
     public void AddBuilding()
     {
-        var city = CreateExampleCity1();
-        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         int palace = 1;
@@ -379,8 +379,8 @@ public sealed class CityManagerTests
     [TestMethod]
     public void GetTileStatus()
     {
-        var city = CreateExampleCity1();
-        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         int value = cityManager.GetTileStatus(new CubeCoordinates(2, -1, 0));
@@ -396,11 +396,11 @@ public sealed class CityManagerTests
     [TestMethod]
     public void GetTilesForGrow()
     {
-        var city = CreateExampleCity1();
-        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        var city2 = CreateExampleCity2();
+        var city2 = TestUtils.CreateExampleCity2();
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
         var possibleTiles = cityManager.GetTilesForGrow(city.Id, 3);
@@ -411,11 +411,11 @@ public sealed class CityManagerTests
     [TestMethod]
     public void Inhabitants()
     {
-        var city = CreateExampleCity1();
-        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        city.Buildings.Add(CreateExampleBuilding(city.Position));
+        city.Buildings.Add(TestUtils.CreateExampleBuilding(city.Position));
         var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant);
         Assert.IsTrue(success);
@@ -429,12 +429,12 @@ public sealed class CityManagerTests
     [TestMethod]
     public void InhabitantsOfPosition()
     {
-        var city = CreateExampleCity1();
-        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        city.Buildings.Add(CreateExampleBuilding(new CubeCoordinates(1, 0, -1)));
-        city.Buildings.Add(CreateExampleBuilding(new CubeCoordinates(0, 0, 0)));
+        city.Buildings.Add(TestUtils.CreateExampleBuilding(new CubeCoordinates(1, 0, -1)));
+        city.Buildings.Add(TestUtils.CreateExampleBuilding(new CubeCoordinates(0, 0, 0)));
         var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant);
         Assert.IsTrue(success);
@@ -460,11 +460,11 @@ public sealed class CityManagerTests
     [TestMethod]
     public void InhabitantNeeds()
     {
-        var city = CreateExampleCity1();
-        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), CreateBuildingTypes(), _tileWidth, _tileHeight);
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        city.Buildings.Add(CreateExampleBuilding(city.Position));
+        city.Buildings.Add(TestUtils.CreateExampleBuilding(city.Position));
         var needs = new List<InhabitantNeed>
         {
             new InhabitantNeed(new List<int>(){ 1, 2 }, 2, 10), // Type 1 or 2, every 2 rounds, penalty 10
@@ -478,83 +478,5 @@ public sealed class CityManagerTests
         Assert.AreEqual(90, inhabitant.Satisfaction, "Satisfaction should be 90 at round 2.");
         inhabitant.SatisfyNeed(2, 3); // Satisfy need with type 2 at round 2
         Assert.AreEqual(100, inhabitant.Satisfaction, "Satisfaction should be 100 after satisfying need at round 3.");
-    }
-
-    private CityBase CreateExampleCity1()
-    {
-        return new CityBase
-        {
-            Id = 0,
-            Player = 1,
-            Name = "City1",
-            Position = new CubeCoordinates(0, 0, 0),
-            Tiles = new List<CubeCoordinates>() { new CubeCoordinates(1, 0, -1), new CubeCoordinates(0, 1, -1) },
-            PositionPixel = new(0, 0),
-            TilesPixel = new() { new Point(34, 0), new Point(17, 24) },
-            Borders = new(),
-        };
-    }
-
-    private CityBase CreateExampleCity2()
-    {
-        return new CityBase
-        {
-            Id = 1,
-            Player = 2,
-            Name = "City2",
-            Position = new CubeCoordinates(3, 0, -3),
-            Tiles = new List<CubeCoordinates>() { new CubeCoordinates(2, 0, -2), new CubeCoordinates(2, 1, -3) },
-            PositionPixel = new(102, 0),
-            TilesPixel = new() { new Point(68, 0), new Point(85, 24) },
-            Borders = new(),
-        };
-    }
-
-    private BuildingBase CreateExampleBuilding(CubeCoordinates coordinates)
-    {
-        return new BuildingBase
-        {
-            Type = 1,
-            Position = coordinates,
-            Citizens = 2
-        };
-    }
-
-    private CityBase CloneCity(CityBase city)
-    {
-        return new CityBase
-        {
-            Id = city.Id,
-            Player = city.Player,
-            Name = city.Name,
-            Position = city.Position,
-            Tiles = city.Tiles,
-            PositionPixel = city.PositionPixel,
-            TilesPixel = city.TilesPixel,
-            Borders = city.Borders,
-        };
-    }
-
-    private List<BuildingType> CreateBuildingTypes()
-    {
-        return new List<BuildingType>
-        {
-            new BuildingType(){
-                Name = "Palace",
-                Type = 1,
-                Era = 1,
-                Invention = 4,
-                ProductionCost = 150,
-                PurchaseCost = 500
-            },
-            new BuildingType(){
-                Name = "Lumberjack",
-                Type = 2,
-                Era = 1,
-                Invention = 4,
-                ProductionCost = 150,
-                PurchaseCost = 500
-            }
-        };
     }
 }
