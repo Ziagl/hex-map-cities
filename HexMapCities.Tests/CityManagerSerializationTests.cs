@@ -10,6 +10,9 @@ namespace com.hexagonsimulations.HexMapCities.Tests;
 [TestClass]
 public sealed class CityManagerSerializationTests
 {
+    private readonly string TempDir = @"C:\Temp\";
+    private readonly bool DumpToDisk = false; // set to true to dump serialized data to disk for inspection
+
     private readonly List<BuildingType> _buildingDefinitions = new();
 
     public CityManagerSerializationTests()
@@ -18,7 +21,7 @@ public sealed class CityManagerSerializationTests
     }
 
     [TestMethod]
-    public void SerializationDeserialization()
+    public void CityManager_Json()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         exampleMap[0] = (int)TileType.UNBUILDABLE;
@@ -31,9 +34,10 @@ public sealed class CityManagerSerializationTests
         var json = cityManager.ToJson();
         Assert.IsFalse(string.IsNullOrWhiteSpace(json), "JSON should not be empty.");
 
-        // dump this map as JSON to disk
-        //var filePath = @"C:\Temp\CityManager.json";
-        //File.WriteAllText(filePath, json);
+        if (DumpToDisk)
+        {
+            File.WriteAllText($"{TempDir}CityManager.json", json);
+        }
 
         var roundTripped = CityManager.FromJson(json);
         Assert.IsNotNull(roundTripped, "Deserialized CityManager should not be null.");
@@ -42,7 +46,7 @@ public sealed class CityManagerSerializationTests
     }
 
     [TestMethod]
-    public void SerializationDeserializationBinary()
+    public void CityManager_Binary()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         exampleMap[0] = (int)TileType.UNBUILDABLE;
@@ -58,9 +62,10 @@ public sealed class CityManagerSerializationTests
             cityManager.Write(writer);
         }
 
-        // dump this map as BIN to disk
-        //var filePath = @"C:\Temp\CityManager.bin";
-        //File.WriteAllBytes(filePath, ms.ToArray());
+        if (DumpToDisk)
+        {
+            File.WriteAllBytes($"{TempDir}CityManager.bin", ms.ToArray());
+        }
 
         ms.Position = 0;
         CityManager roundTripped;
