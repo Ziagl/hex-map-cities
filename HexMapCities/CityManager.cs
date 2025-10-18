@@ -1,9 +1,8 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using com.hexagonsimulations.HexMapBase.Models;
+﻿using com.hexagonsimulations.HexMapBase.Models;
 using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
-using HexMapCities.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace com.hexagonsimulations.HexMapCities;
 

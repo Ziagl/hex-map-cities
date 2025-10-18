@@ -2,7 +2,6 @@
 using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
 using com.hexagonsimulations.HexMapCities.Tests.Models;
-using HexMapCities.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Tests;
 

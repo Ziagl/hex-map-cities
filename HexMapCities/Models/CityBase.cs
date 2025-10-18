@@ -1,6 +1,5 @@
 ﻿using com.hexagonsimulations.HexMapBase.Interfaces;
 using com.hexagonsimulations.HexMapBase.Models;
-using HexMapCities.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 

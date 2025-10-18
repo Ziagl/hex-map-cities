@@ -1,6 +1,6 @@
 ﻿using com.hexagonsimulations.HexMapBase.Models;
 
-namespace HexMapCities.Models;
+namespace com.hexagonsimulations.HexMapCities.Models;
 
 public class InhabitantBase
 {

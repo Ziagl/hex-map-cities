@@ -1,4 +1,4 @@
-﻿namespace HexMapCities.Models;
+﻿namespace com.hexagonsimulations.HexMapCities.Models;
 
 public class InhabitantNeed
 {
