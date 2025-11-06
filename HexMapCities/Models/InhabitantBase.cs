@@ -1,13 +1,27 @@
-﻿using com.hexagonsimulations.HexMapBase.Models;
+﻿using System.Text.Json.Serialization;
+using com.hexagonsimulations.HexMapBase.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 
 public class InhabitantBase
 {
-    public int Type { get; private set; }
-    public CubeCoordinates Position { get; init; }  // the position of the building this inhabitant lives
-    public List<InhabitantNeed> Needs { get; private set; }
-    public int Satisfaction { get; private set; }
+    [JsonPropertyName("type")]
+    public int Type { get; set; }
+
+    [JsonPropertyName("position")]
+    public CubeCoordinates Position { get; init; } // the position of the building this inhabitant lives
+
+    [JsonPropertyName("needs")]
+    public List<InhabitantNeed> Needs { get; set; }
+
+    [JsonPropertyName("satisfaction")]
+    public int Satisfaction { get; set; }
+
+    [JsonConstructor]
+    public InhabitantBase()
+    {
+        Needs = new List<InhabitantNeed>();
+    }
 
     public InhabitantBase(CubeCoordinates position, List<InhabitantNeed> needs)
     {
@@ -67,7 +81,7 @@ public class InhabitantBase
             {
                 // Need was not satisfied this round
                 Satisfaction -= need.SatisfactionPenalty;
-                if(Satisfaction < 0)
+                if (Satisfaction < 0)
                 {
                     Satisfaction = 0;
                 }

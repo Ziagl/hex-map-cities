@@ -369,7 +369,7 @@ public sealed class CityManagerTests
         Assert.IsTrue(success, "city position for city buildings");
         success = cityManager.AddBuilding(17, new CubeCoordinates(2, 0, -2), lumberjack);
         Assert.IsFalse(success, "city not known");
-        success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), 3);
+        success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), 4);
         Assert.IsFalse(success, "building type unknown");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), lumberjack);
         Assert.IsTrue(success, "add second building");

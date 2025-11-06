@@ -64,7 +64,8 @@ internal class TestUtils
     {
         return new List<BuildingType>
         {
-            new BuildingType(){
+            new BuildingType()
+            {
                 Name = "Palace",
                 Type = 1,
                 Era = 1,
@@ -72,14 +73,34 @@ internal class TestUtils
                 ProductionCost = 150,
                 PurchaseCost = 500
             },
-            new BuildingType(){
+            new BuildingType()
+            {
                 Name = "Lumberjack",
                 Type = 2,
                 Era = 1,
                 Invention = 4,
                 ProductionCost = 150,
                 PurchaseCost = 500
+            },
+            new BuildingType()
+            {
+                Name = "House",
+                Type = 3,
+                Era = 1,
+                Invention = 4,
+                ProductionCost = 150,
+                PurchaseCost = 500,
+                Citizens = 3
             }
+        };
+    }
+
+    internal static List<InhabitantNeed> CreateInhabitantNeeds()
+    {
+        return new List<InhabitantNeed>
+        {
+            new InhabitantNeed(new List<int>(){ 1, 2, 3 }, 1),
+            new InhabitantNeed(new List<int>(){ 4, 5 }, 2)
         };
     }
 }

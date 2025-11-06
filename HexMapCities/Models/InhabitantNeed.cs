@@ -1,15 +1,34 @@
-﻿namespace com.hexagonsimulations.HexMapCities.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace com.hexagonsimulations.HexMapCities.Models;
 
 public class InhabitantNeed
 {
-    public List<int> Types { get; init; }   // list of types this need can be satisfied with (OR)
+    [JsonPropertyName("types")]
+    public List<int> Types { get; init; } = new();   // list of types this need can be satisfied with (OR)
+    
+    [JsonPropertyName("interval")]
     public int Interval { get; init; } // Every how many rounds the need becomes active
+    
+    [JsonPropertyName("lastSatisfiedRound")]
     public int LastSatisfiedRound { get; private set; }
+    
+    [JsonPropertyName("satisfactionPenalty")]
     public int SatisfactionPenalty { get; init; }
+
+    // Required for JSON deserialization
+    [JsonConstructor]
+    public InhabitantNeed()
+    {
+        Types = new List<int>();
+        Interval = 0;
+        SatisfactionPenalty = 0;
+        LastSatisfiedRound = 0;
+    }
 
     public InhabitantNeed(List<int> types, int interval, int satisfactionPenalty = 0)
     {
-        Types =  types;
+        Types = types;
         Interval = interval;
         SatisfactionPenalty = satisfactionPenalty;
         LastSatisfiedRound = 0;
@@ -33,5 +52,4 @@ public class InhabitantNeed
     {
         LastSatisfiedRound = currentRound;
     }
-
 }

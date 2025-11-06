@@ -1,4 +1,5 @@
-﻿using com.hexagonsimulations.HexMapCities.Enums;
+﻿using com.hexagonsimulations.HexMapBase.Models;
+using com.hexagonsimulations.HexMapCities.Enums;
 using com.hexagonsimulations.HexMapCities.Models;
 using com.hexagonsimulations.HexMapCities.Tests.Models;
 using System.Reflection;
@@ -65,16 +66,77 @@ public sealed class CityManagerSerializationTests
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
         exampleMap[9] = (int)TileType.UNBUILDABLE;
-        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>() { (int)TileType.UNBUILDABLE }, TestUtils.CreateBuildingTypes());
+        var buildingTypes = TestUtils.CreateBuildingTypes();
+        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>() { (int)TileType.UNBUILDABLE }, buildingTypes, 50, 50);
         var city = TestUtils.CreateExampleCity1();
         var city2 = TestUtils.CreateExampleCity2();
-        cityManager.CreateCity(city);
-        var newTilePosition = new HexMapBase.Models.CubeCoordinates(-1, 2, -1);
-        cityManager.AddCityTile(city.Id, newTilePosition);
-        cityManager.AddBuilding(city.Id, newTilePosition, 0);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        var newTilePosition = new CubeCoordinates(-1, 2, -1);
+        success = cityManager.AddCityTile(city.Id, newTilePosition);
+        Assert.IsTrue(success);
+        success = cityManager.AddBuilding(city.Id, newTilePosition, 3 /*House*/);
+        Assert.IsTrue(success);
+        success = cityManager.AddInhabitant(city.Id, new InhabitantBase(newTilePosition, TestUtils.CreateInhabitantNeeds()));
+        Assert.IsTrue(success);
         cityManager.CreateCity(city2);
+        cityManager.CreateCityBorders(city.Player);
 
         return cityManager;
+    }
+
+    private static void AssertCityBaseEqual(CityBase expected, CityBase actual)
+    {
+        Assert.AreEqual(expected.Id, actual.Id, "City Id mismatch");
+        Assert.AreEqual(expected.Player, actual.Player, "City Player mismatch");
+        Assert.AreEqual(expected.Health, actual.Health, "City Health mismatch");
+        Assert.AreEqual(expected.MaxHealth, actual.MaxHealth, "City MaxHealth mismatch");
+        Assert.AreEqual(expected.Name, actual.Name, "City Name mismatch");
+        Assert.AreEqual(expected.WeaponType, actual.WeaponType, "City WeaponType mismatch");
+        Assert.AreEqual(expected.CombatStrength, actual.CombatStrength, "City CombatStrength mismatch");
+        Assert.AreEqual(expected.RangedAttack, actual.RangedAttack, "City RangedAttack mismatch");
+        Assert.AreEqual(expected.Range, actual.Range, "City Range mismatch");
+        Assert.AreEqual(expected.Seed, actual.Seed, "City Seed mismatch");
+
+        Assert.AreEqual(expected.Position, actual.Position, "City Position mismatch");
+        CollectionAssert.AreEqual(expected.Tiles, actual.Tiles, "City Tiles mismatch");
+        Assert.AreEqual(expected.PositionPixel, actual.PositionPixel, "City PositionPixel mismatch");
+        CollectionAssert.AreEqual(expected.TilesPixel, actual.TilesPixel, "City TilesPixel mismatch");
+        CollectionAssert.AreEqual(expected.Borders, actual.Borders, "City Borders mismatch");
+
+        Assert.AreEqual(expected.Buildings.Count, actual.Buildings.Count, "City Buildings count mismatch");
+        for (int i = 0; i < expected.Buildings.Count; i++)
+        {
+            var expectedBuilding = expected.Buildings[i];
+            var actualBuilding = actual.Buildings[i];
+            Assert.AreEqual(expectedBuilding.Type, actualBuilding.Type, $"Building Type mismatch at index {i}");
+            Assert.AreEqual(expectedBuilding.IsActive, actualBuilding.IsActive, $"Building IsActive mismatch at index {i}");
+            Assert.AreEqual(expectedBuilding.Position, actualBuilding.Position, $"Building Position mismatch at index {i}");
+        }
+
+        Assert.AreEqual(expected.Inhabitants.Count, actual.Inhabitants.Count, "City Inhabitants count mismatch");
+        for (int i = 0; i < expected.Inhabitants.Count; i++)
+        {
+            var expectedInhabitant = expected.Inhabitants[i];
+            var actualInhabitant = actual.Inhabitants[i];
+            Assert.AreEqual(expectedInhabitant.Type, actualInhabitant.Type, $"Inhabitant Type mismatch at index {i}");
+            Assert.AreEqual(expectedInhabitant.Position, actualInhabitant.Position, $"Inhabitant Position mismatch at index {i}");
+            Assert.AreEqual(expectedInhabitant.Satisfaction, actualInhabitant.Satisfaction, $"Inhabitant Satisfaction mismatch at index {i}");
+            Assert.AreEqual(expectedInhabitant.Needs.Count, actualInhabitant.Needs.Count, "Needs count mismatch");
+            for (int j = 0; j < expectedInhabitant.Needs.Count; j++)
+            {
+                Assert.AreEqual(expectedInhabitant.Needs[j].LastSatisfiedRound, actualInhabitant.Needs[j].LastSatisfiedRound, $"Need LastSatisfiedRound mismatch at index {j}");
+                Assert.AreEqual(expectedInhabitant.Needs[j].SatisfactionPenalty, actualInhabitant.Needs[j].SatisfactionPenalty, $"Need SatisfactionPenalty mismatch at index {j}");
+                Assert.AreEqual(expectedInhabitant.Needs[j].Interval, actualInhabitant.Needs[j].Interval, $"Need Interval mismatch at index {j}");
+                CollectionAssert.AreEqual(expectedInhabitant.Needs[j].Types, actualInhabitant.Needs[j].Types, $"Need Types mismatch at index {j}");
+            }
+        }
+
+        CollectionAssert.AreEqual(
+            expected.Properties.OrderBy(x => x.Key).ToList(),
+            actual.Properties.OrderBy(x => x.Key).ToList(),
+            "City Properties mismatch"
+        );
     }
 
     private static void AssertCityManagerEqual(CityManager expected, CityManager actual)
@@ -84,7 +146,7 @@ public sealed class CityManagerSerializationTests
         var actualType = actual.GetType();
 
         // Compare _cityStore
-         var expectedCityStore = (Dictionary<int, CityBase>)expectedType
+        var expectedCityStore = (Dictionary<int, CityBase>)expectedType
             .GetField("_cityStore", BindingFlags.NonPublic | BindingFlags.Instance)!
             .GetValue(expected)!;
         var actualCityStore = (Dictionary<int, CityBase>)actualType
@@ -95,7 +157,7 @@ public sealed class CityManagerSerializationTests
         foreach (var key in expectedCityStore.Keys)
         {
             Assert.IsTrue(actualCityStore.ContainsKey(key), $"CityStore key {key} is missing in actual.");
-            Assert.AreEqual(expectedCityStore[key].Id, actualCityStore[key].Id, $"CityStore city ID mismatch for key {key}.");
+            AssertCityBaseEqual(expectedCityStore[key], actualCityStore[key]);
         }
 
         // Compare _lastCityStoreId

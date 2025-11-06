@@ -1,5 +1,6 @@
 ﻿using com.hexagonsimulations.HexMapBase.Models;
 using com.hexagonsimulations.HexMapCities.Models;
+using com.hexagonsimulations.HexMapCities.Tests.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Tests;
 
@@ -24,7 +25,7 @@ public sealed class UtilsTests
     [TestMethod]
     public void IsCityNeighbor()
     {
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         bool neighbor = Utils.IsCityNeighbor(city, new CubeCoordinates(2, 0, -2));
         Assert.IsTrue(neighbor);
         neighbor = Utils.IsCityNeighbor(city, new CubeCoordinates(3, 0, -3));
@@ -91,27 +92,12 @@ public sealed class UtilsTests
     [TestMethod]
     public void GetNeighborsForDistance()
     {
-        var city = CreateExampleCity1();
+        var city = TestUtils.CreateExampleCity1();
         var neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 1);
         Assert.AreEqual(6, neighbors.Count);
         neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 2);
         Assert.AreEqual(18, neighbors.Count);
         neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 3);
         Assert.AreEqual(36, neighbors.Count);
-    }
-
-    private CityBase CreateExampleCity1()
-    {
-        return new CityBase
-        {
-            Id = 0,
-            Player = 1,
-            Name = "City1",
-            Position = new CubeCoordinates(0, 0, 0),
-            Tiles = new List<CubeCoordinates>() { new CubeCoordinates(1, 0, -1), new CubeCoordinates(0, 1, -1) },
-            PositionPixel = new(0, 0),
-            TilesPixel = new() { new Point(34, 0), new Point(17, 24) },
-            Borders = new(),
-        };
     }
 }

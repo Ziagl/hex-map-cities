@@ -1,11 +1,14 @@
-﻿using com.hexagonsimulations.HexMapBase.Models;
+﻿using System.Text.Json.Serialization;
+
+using com.hexagonsimulations.HexMapBase.Models;
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 
 public record BuildingBase : BuildingType
 {
-    // base
-    public bool IsActive = true; // is this building active?
+    [JsonPropertyName("isActive")]
+    public bool IsActive { get; set; } = true; // is this building active?
 
-    public CubeCoordinates Position; // its position on the map
+    [JsonPropertyName("position")]
+    public CubeCoordinates Position { get; set; } // its position on the map
 }
