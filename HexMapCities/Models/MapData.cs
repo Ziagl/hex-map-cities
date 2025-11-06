@@ -1,20 +1,29 @@
-﻿namespace com.hexagonsimulations.HexMapCities.Models;
+﻿using System.Text.Json.Serialization;
 
-internal class MapData
+namespace com.hexagonsimulations.HexMapCities;
+
+public class MapData
 {
-    internal List<int> Map { get; set; } = new();
-    internal int Rows { get; set; }
-    internal int Columns { get; set; }
+    [JsonPropertyName("map")]
+    public List<int> Map { get; set; } = new();
 
-    public MapData() { }
+    [JsonPropertyName("rows")]
+    public int Rows { get; set; }
+
+    [JsonPropertyName("columns")]
+    public int Columns { get; set; }
+
+    public MapData()
+    {
+    }
 
     public MapData Clone()
     {
         return new MapData
         {
-            Rows = this.Rows,
-            Columns = this.Columns,
-            Map = this.Map is null ? new List<int>() : new List<int>(this.Map)
+            Map = new List<int>(Map),
+            Rows = Rows,
+            Columns = Columns
         };
     }
 }
