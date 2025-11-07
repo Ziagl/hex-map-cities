@@ -230,19 +230,23 @@ public class CityManager
     /// All cities of given player number
     /// </summary>
     /// <param name="playerId">player id to search for</param>
-    /// <returns>array of cities for given player, if no unit was found, empty array</returns>
+    /// <returns>List of cities for given player, if no unit was found, empty array</returns>
     public List<CityBase> GetCitiesOfPlayer(int playerId)
-    {
-        List<CityBase> foundCities = new();
-        foreach (var city in _cityStore)
-        {
-            if (city.Value.Player == playerId)
-            {
-                foundCities.Add(city.Value);
-            }
-        }
-        return foundCities;
-    }
+        => FindCities(playerId, null);
+
+    /// <summary>
+    /// Find cities that meet given criteria. You can filter by playerId and/or buildingType.
+    /// </summary>
+    /// <param name="playerId">Player Id the city should belong (can be null).</param>
+    /// <param name="buildingType">Type of building this city should have built (can be null).</param>
+    /// <returns>List of cities that match the criteria.</returns>
+    public List<CityBase> FindCities(int? playerId, int? buildingType)
+        => _cityStore.Values
+            .Where(city => 
+                (playerId.HasValue || buildingType.HasValue) &&
+                (!playerId.HasValue || city.Player == playerId.Value) &&
+                (buildingType == null || city.Buildings.Any(b => b.Type == buildingType)))
+            .ToList();
 
     /// <summary>
     /// Tests if given coordinates are part of given city (city tile or one of its tiles)
@@ -439,7 +443,7 @@ public class CityManager
             return false;   // no building on this position
         }
         var otherInhabitants = GetInhabitantsOfPosition(inhabitant.Position);
-        if(building.Citizens - otherInhabitants.Count <= 0)
+        if (building.Citizens - otherInhabitants.Count <= 0)
         {
             return false;   // not enough free dwellings
         }

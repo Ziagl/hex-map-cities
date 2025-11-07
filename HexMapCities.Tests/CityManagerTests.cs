@@ -67,10 +67,10 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
-    public void GetCitiesOfPlayer()
+    public void FindCities()
     {
         var exampleMap = Enumerable.Repeat(0, 16).ToList();
-        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), new List<BuildingType>());
+        var cityManager = new CityManager(exampleMap, 4, 4, new List<int>(), TestUtils.CreateBuildingTypes());
         var city = TestUtils.CreateExampleCity1();
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
@@ -87,6 +87,15 @@ public sealed class CityManagerTests
         Assert.AreEqual(2, cities.Count);
         cities = cityManager.GetCitiesOfPlayer(1);
         Assert.AreEqual(1, cities.Count);
+        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 0, -2), 1); // palace
+        Assert.IsTrue(success);
+        cities = cityManager.FindCities(null, null);
+        Assert.IsEmpty(cities);
+        cities = cityManager.FindCities(city.Player, null);
+        Assert.AreEqual(1, cities.Count);
+        cities = cityManager.FindCities(null, 1); // palace
+        Assert.AreEqual(1, cities.Count);
+        Assert.AreEqual(city2.Id, cities.First().Id);
     }
 
     [TestMethod]
