@@ -240,7 +240,7 @@ public class CityManager
     /// <param name="playerId">Player Id the city should belong (can be null).</param>
     /// <param name="buildingType">Type of building this city should have built (can be null).</param>
     /// <returns>List of cities that match the criteria.</returns>
-    public List<CityBase> FindCities(int? playerId, int? buildingType)
+    public List<CityBase> FindCities(int? playerId = null, int? buildingType = null)
         => _cityStore.Values
             .Where(city => 
                 (playerId.HasValue || buildingType.HasValue) &&
