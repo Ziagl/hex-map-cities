@@ -68,4 +68,12 @@ public class CityBase : ICombatEntity
     // properties
     [JsonPropertyName("properties")]
     public Dictionary<string, object> Properties { get; set; } = new();
+
+    // Internal constructor - only accessible within the same assembly
+    // This allows CityFactory to create instances while preventing external code from doing so
+    // JSON deserializer can still access it since it's in the same assembly
+    [JsonConstructor]
+    internal CityBase()
+    {
+    }
 }
