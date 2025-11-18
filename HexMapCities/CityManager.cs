@@ -249,6 +249,31 @@ public class CityManager
             .ToList();
 
     /// <summary>
+    /// Determines whether the specified city contains at least one building of the given type.
+    /// </summary>
+    /// <remarks>If the city with the specified cityId does not exist, the method returns false.</remarks>
+    /// <param name="cityId">The unique identifier of the city to search for buildings.</param>
+    /// <param name="buildingType">The identifier of the building type to check for within the city.</param>
+    /// <returns>true if the city contains at least one building of the specified type; otherwise, false.</returns>
+    public bool HasBuildingType(int cityId, int buildingType)
+    {
+        var city = GetCityById(cityId);
+        // early exit is city was not found
+        if (city == null)
+        {
+            return false;
+        }
+        foreach(var building in city.Buildings)
+        {
+            if(building.Type == buildingType)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Tests if given coordinates are part of given city (city tile or one of its tiles)
     /// </summary>
     /// <param name="cityId">id of city</param>

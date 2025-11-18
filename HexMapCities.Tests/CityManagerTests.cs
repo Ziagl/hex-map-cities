@@ -370,6 +370,10 @@ public sealed class CityManagerTests
         int lumberjack = 2;
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(1, 0, -1), lumberjack);
         Assert.IsTrue(success, "add first building");
+        success = cityManager.HasBuildingType(city.Id, lumberjack);
+        Assert.IsTrue(success, "city should have a lumberjack");
+        success = cityManager.HasBuildingType(city.Id, palace);
+        Assert.IsFalse(success, "city should not have a palace");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(1, 0, -1), lumberjack);
         Assert.IsFalse(success, "already a building at this coordinates");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(2, 0, -2), lumberjack);
