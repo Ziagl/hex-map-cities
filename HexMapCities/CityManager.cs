@@ -10,6 +10,7 @@ public class CityManager
 {
     private Dictionary<int, CityBase> _cityStore = new();
     private int _lastCityStoreId = 0;
+    private int _lastBuildingStoreId = 0;
     private MapData _map = new();
     private int _tileWidth = 0;
     private int _tileHeight = 0;
@@ -385,14 +386,32 @@ public class CityManager
     /// <returns>true if building was built, false otherwise</returns>
     public bool AddBuilding(int cityId, CubeCoordinates coordinates, int buildingTypeId)
     {
-        var city = GetCityById(cityId);
-        // early exit is city was not found
-        if (city == null)
+        // early exit if buildingTypeId is not valid
+        if (buildingTypeId < 1 || buildingTypeId > _buildingDefinitions.Count)
         {
             return false;
         }
-        // early exit if buildingTypeId is not valid
-        if(buildingTypeId < 1 || buildingTypeId > _buildingDefinitions.Count)
+        // check if building type is known
+        var building = BuildingFactory.CreateBuilding(_buildingDefinitions[buildingTypeId-1]);
+        if(building is null)
+        {
+            return false;
+        }
+        return AddBuilding(cityId, coordinates, building);
+    }
+
+    /// <summary>
+    /// Add given building to given city at given position.
+    /// </summary>
+    /// <param name="cityId">id of city</param>
+    /// <param name="coordinates">coordinates of city tile the building should be placed</param>
+    /// <param name="building">building base instance</param>
+    /// <returns>true if building was built, false otherwise</returns>
+    public bool AddBuilding(int cityId, CubeCoordinates coordinates, BuildingBase building)
+    {
+        var city = GetCityById(cityId);
+        // early exit is city was not found
+        if (city == null)
         {
             return false;
         }
@@ -427,13 +446,12 @@ public class CityManager
                 break;
             }
         }
-        if(buildingOnSameTile)
+        if (buildingOnSameTile)
         {
             return false;
         }
-        // check if building type is known
-        var building = BuildingFactory.CreateBuilding(_buildingDefinitions[buildingTypeId-1]);
-        if(building is null)
+        // check the same building instance is not already part of this city
+        if (city.Buildings.Contains(building))
         {
             return false;
         }

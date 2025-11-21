@@ -368,6 +368,7 @@ public sealed class CityManagerTests
         Assert.IsTrue(success);
         int palace = 1;
         int lumberjack = 2;
+        // add building by id
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(1, 0, -1), lumberjack);
         Assert.IsTrue(success, "add first building");
         success = cityManager.HasBuildingType(city.Id, lumberjack);
@@ -386,6 +387,23 @@ public sealed class CityManagerTests
         Assert.IsFalse(success, "building type unknown");
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(0, 1, -1), lumberjack);
         Assert.IsTrue(success, "add second building");
+        // add building by base object
+        var city2 = TestUtils.CreateExampleCity2();
+        success = cityManager.CreateCity(city2);
+        Assert.IsTrue(success);
+        var buildingType = TestUtils.CreateBuildingTypes().Last();
+        var building = BuildingFactory.CreateBuilding(buildingType);
+        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 0, -2), building);
+        Assert.IsTrue(success, "add first building");
+        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 0, -2), building);
+        Assert.IsFalse(success, "already a building at this coordinates");
+        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 1, -3), building);
+        Assert.IsFalse(success, "it should not be possible to add the same building base instance more than once");
+        building = BuildingFactory.CreateBuilding(buildingType);
+        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 1, -3), building);
+        Assert.IsTrue(success, "add second building");
+        Assert.AreEqual(2, city2.Buildings.Count, "city should have 2 buildings.");
+        Assert.AreNotEqual(city2.Buildings[0].Position, city2.Buildings[1].Position, "buildings should be at different positions.");
     }
 
     [TestMethod]
