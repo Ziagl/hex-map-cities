@@ -4,8 +4,8 @@ public static class CityFactory
 {
     public static CityBase CreateCityBase(string name, int player)
         =>  new CityBase
-            {
-                Name = name,
-                Player = player
-            };
+        {
+            Name = name,
+            Player = player
+        };
 }
