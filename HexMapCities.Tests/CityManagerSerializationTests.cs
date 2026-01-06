@@ -104,7 +104,7 @@ public sealed class CityManagerSerializationTests
         CollectionAssert.AreEqual(expected.TilesPixel, actual.TilesPixel, "City TilesPixel mismatch");
         CollectionAssert.AreEqual(expected.Borders, actual.Borders, "City Borders mismatch");
 
-        Assert.AreEqual(expected.Buildings.Count, actual.Buildings.Count, "City Buildings count mismatch");
+        Assert.HasCount(expected.Buildings.Count, actual.Buildings, "City Buildings count mismatch");
         for (int i = 0; i < expected.Buildings.Count; i++)
         {
             var expectedBuilding = expected.Buildings[i];
@@ -114,7 +114,7 @@ public sealed class CityManagerSerializationTests
             Assert.AreEqual(expectedBuilding.Position, actualBuilding.Position, $"Building Position mismatch at index {i}");
         }
 
-        Assert.AreEqual(expected.Inhabitants.Count, actual.Inhabitants.Count, "City Inhabitants count mismatch");
+        Assert.HasCount(expected.Inhabitants.Count, actual.Inhabitants, "City Inhabitants count mismatch");
         for (int i = 0; i < expected.Inhabitants.Count; i++)
         {
             var expectedInhabitant = expected.Inhabitants[i];
@@ -122,7 +122,7 @@ public sealed class CityManagerSerializationTests
             Assert.AreEqual(expectedInhabitant.Type, actualInhabitant.Type, $"Inhabitant Type mismatch at index {i}");
             Assert.AreEqual(expectedInhabitant.Position, actualInhabitant.Position, $"Inhabitant Position mismatch at index {i}");
             Assert.AreEqual(expectedInhabitant.Satisfaction, actualInhabitant.Satisfaction, $"Inhabitant Satisfaction mismatch at index {i}");
-            Assert.AreEqual(expectedInhabitant.Needs.Count, actualInhabitant.Needs.Count, "Needs count mismatch");
+            Assert.HasCount(expectedInhabitant.Needs.Count, actualInhabitant.Needs, "Needs count mismatch");
             for (int j = 0; j < expectedInhabitant.Needs.Count; j++)
             {
                 Assert.AreEqual(expectedInhabitant.Needs[j].LastSatisfiedRound, actualInhabitant.Needs[j].LastSatisfiedRound, $"Need LastSatisfiedRound mismatch at index {j}");
@@ -153,7 +153,7 @@ public sealed class CityManagerSerializationTests
             .GetField("_cityStore", BindingFlags.NonPublic | BindingFlags.Instance)!
             .GetValue(actual)!;
 
-        Assert.AreEqual(expectedCityStore.Count, actualCityStore.Count, "CityStore counts do not match.");
+        Assert.HasCount(expectedCityStore.Count, actualCityStore, "CityStore counts do not match.");
         foreach (var key in expectedCityStore.Keys)
         {
             Assert.IsTrue(actualCityStore.ContainsKey(key), $"CityStore key {key} is missing in actual.");
@@ -190,7 +190,7 @@ public sealed class CityManagerSerializationTests
             .GetField("_buildingDefinitions", BindingFlags.NonPublic | BindingFlags.Instance)!
             .GetValue(actual)!;
 
-        Assert.AreEqual(expectedBuildingDefinitions.Count, actualBuildingDefinitions.Count, "BuildingDefinitions count does not match.");
+        Assert.HasCount(expectedBuildingDefinitions.Count, actualBuildingDefinitions, "BuildingDefinitions count does not match.");
         for (int i = 0; i < expectedBuildingDefinitions.Count; i++)
         {
             Assert.AreEqual(expectedBuildingDefinitions[i].Name, actualBuildingDefinitions[i].Name, $"BuildingDefinition mismatch at index {i}.");

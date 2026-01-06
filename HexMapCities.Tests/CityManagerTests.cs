@@ -84,17 +84,17 @@ public sealed class CityManagerTests
         success = cityManager.CreateCity(city3);
         Assert.IsTrue(success);
         var cities = cityManager.GetCitiesOfPlayer(2);
-        Assert.AreEqual(2, cities.Count);
+        Assert.HasCount(2, cities);
         cities = cityManager.GetCitiesOfPlayer(1);
-        Assert.AreEqual(1, cities.Count);
+        Assert.HasCount(1, cities);
         success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 0, -2), 1); // palace
         Assert.IsTrue(success);
         cities = cityManager.FindCities(null, null);
         Assert.IsEmpty(cities);
         cities = cityManager.FindCities(city.Player, null);
-        Assert.AreEqual(1, cities.Count);
+        Assert.HasCount(1, cities);
         cities = cityManager.FindCities(null, 1); // palace
-        Assert.AreEqual(1, cities.Count);
+        Assert.HasCount(1, cities);
         Assert.AreEqual(city2.Id, cities.First().Id);
     }
 
@@ -107,7 +107,7 @@ public sealed class CityManagerTests
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         cityManager.CreateCityBorders(city.Player);
-        Assert.AreEqual(12, city.Borders.Count);
+        Assert.HasCount(12, city.Borders);
     }
 
     [TestMethod]
@@ -127,7 +127,7 @@ public sealed class CityManagerTests
             cityManager.AddCityTile(city.Id, tile);
         }
         cityManager.CreateCityBorders(city.Player);
-        Assert.AreEqual(12, city.Borders.Count);
+        Assert.HasCount(12, city.Borders);
     }
 
     [TestMethod]
@@ -147,8 +147,8 @@ public sealed class CityManagerTests
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
         cityManager.CreateCityBorders(city.Player);
-        Assert.AreEqual(9, city.Borders.Count);
-        Assert.AreEqual(15, city2.Borders.Count);
+        Assert.HasCount(9, city.Borders);
+        Assert.HasCount(15, city2.Borders);
     }
 
     [TestMethod]
@@ -173,8 +173,8 @@ public sealed class CityManagerTests
             cityManager.AddCityTile(city2.Id, tile);
         }
         cityManager.CreateCityBorders(city.Player);
-        Assert.AreEqual(11, city.Borders.Count);
-        Assert.AreEqual(17, city2.Borders.Count);
+        Assert.HasCount(11, city.Borders);
+        Assert.HasCount(17, city2.Borders);
     }
 
     [TestMethod]
@@ -193,7 +193,7 @@ public sealed class CityManagerTests
         newTile = new CubeCoordinates(2, 0, -2);
         success = cityManager.AddCityTile(city.Id, newTile);
         Assert.IsTrue(success);
-        Assert.AreEqual(3, city.Tiles.Count);
+        Assert.HasCount(3, city.Tiles);
     }
 
     [TestMethod]
@@ -217,7 +217,7 @@ public sealed class CityManagerTests
         newTile = new CubeCoordinates(3, 0, -3);
         success = cityManager.AddCityTile(city.Id, newTile);
         Assert.IsTrue(success);
-        Assert.AreEqual(4, city.Tiles.Count);
+        Assert.HasCount(4, city.Tiles);
     }
 
     [TestMethod]
@@ -250,12 +250,12 @@ public sealed class CityManagerTests
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         cityManager.CreateCityBorders(city.Player);
-        Assert.AreEqual(12, city.Borders.Count);
+        Assert.HasCount(12, city.Borders);
         var newTile = new CubeCoordinates(1, 1, -2);
         success = cityManager.AddCityTile(city.Id, newTile);
         Assert.IsTrue(success);
         cityManager.CreateCityBorders(city.Player);
-        Assert.AreEqual(14, city.Borders.Count);
+        Assert.HasCount(14, city.Borders);
     }
 
     [TestMethod]
@@ -402,7 +402,7 @@ public sealed class CityManagerTests
         building = BuildingFactory.CreateBuilding(buildingType);
         success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 1, -3), building);
         Assert.IsTrue(success, "add second building");
-        Assert.AreEqual(2, city2.Buildings.Count, "city should have 2 buildings.");
+        Assert.HasCount(2, city2.Buildings, "city should have 2 buildings.");
         Assert.AreNotEqual(city2.Buildings[0].Position, city2.Buildings[1].Position, "buildings should be at different positions.");
     }
 
@@ -414,13 +414,13 @@ public sealed class CityManagerTests
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         int value = cityManager.GetTileStatus(new CubeCoordinates(2, -1, 0));
-        Assert.IsTrue(-2 == value, $"Cordinates should be wrong. Return value: {value}.");
+        Assert.AreEqual(-2, value, $"Cordinates should be wrong. Return value: {value}.");
         value = cityManager.GetTileStatus(new CubeCoordinates(2, 0, -1));
-        Assert.IsTrue((int)TileType.EMPTY == value, $"Tile should be empty. Return value: {value}.");
+        Assert.AreEqual((int)TileType.EMPTY, value, $"Tile should be empty. Return value: {value}.");
         value = cityManager.GetTileStatus(new CubeCoordinates(0, 0, 0));
-        Assert.IsTrue(city.Id == value, $"Tile should be occupied by a city. Return value: {value}.");
+        Assert.AreEqual(city.Id, value, $"Tile should be occupied by a city. Return value: {value}.");
         value = cityManager.GetTileStatus(new CubeCoordinates(1, 0, -1));
-        Assert.IsTrue(city.Id == value, $"Tile should be part of city tiles. Return value: {value}.");
+        Assert.AreEqual(city.Id, value, $"Tile should be part of city tiles. Return value: {value}.");
     }
 
     [TestMethod]
@@ -434,8 +434,8 @@ public sealed class CityManagerTests
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
         var possibleTiles = cityManager.GetTilesForGrow(city.Id, 3);
-        Assert.AreEqual(2, possibleTiles[1].Count);
-        Assert.AreEqual(4, possibleTiles[2].Count);
+        Assert.HasCount(2, possibleTiles[1]);
+        Assert.HasCount(4, possibleTiles[2]);
     }
 
     [TestMethod]
@@ -449,11 +449,11 @@ public sealed class CityManagerTests
         var inhabitant = new InhabitantBase(new CubeCoordinates(0, 0, 0), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant);
         Assert.IsTrue(success);
-        Assert.AreEqual(1, city.Inhabitants.Count);
+        Assert.HasCount(1, city.Inhabitants);
         inhabitant.Upgrade(new List<InhabitantNeed>());
-        Assert.IsTrue(inhabitant.Type == 2, "Inhabitant should be upgraded to type 2.");
+        Assert.AreEqual(2, inhabitant.Type, "Inhabitant should be upgraded to type 2.");
         inhabitant.Downgrade(new List<InhabitantNeed>());
-        Assert.IsTrue(inhabitant.Type == 1, "Inhabitant should be downgraded to type 1.");
+        Assert.AreEqual(1, inhabitant.Type, "Inhabitant should be downgraded to type 1.");
     }
 
     [TestMethod]
@@ -474,14 +474,14 @@ public sealed class CityManagerTests
         var inhabitant2 = new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant2);
         Assert.IsTrue(success);
-        Assert.IsTrue(2 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(0, 0, 0)).Count, "There should be 2 inhabitants at this position.");
-        Assert.IsTrue(0 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(2, 0, -2)).Count, "There should be no inhabitants at this position.");
-        Assert.IsTrue(1 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(1, 0, -1)).Count, "There should be 1 inhabitant at this position.");
+        Assert.HasCount(2, cityManager.GetInhabitantsOfPosition(new CubeCoordinates(0, 0, 0)), "There should be 2 inhabitants at this position.");
+        Assert.IsEmpty(cityManager.GetInhabitantsOfPosition(new CubeCoordinates(2, 0, -2)), "There should be no inhabitants at this position.");
+        Assert.HasCount(1, cityManager.GetInhabitantsOfPosition(new CubeCoordinates(1, 0, -1)), "There should be 1 inhabitant at this position.");
         // test building capacity
         var inhabitant3 = new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant3);
         Assert.IsTrue(success);
-        Assert.IsTrue(2 == cityManager.GetInhabitantsOfPosition(new CubeCoordinates(1, 0, -1)).Count, "There should be 2 inhabitants at this position.");
+        Assert.HasCount(2, cityManager.GetInhabitantsOfPosition(new CubeCoordinates(1, 0, -1)), "There should be 2 inhabitants at this position.");
         var inhabitant4 = new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>());
         success = cityManager.AddInhabitant(city.Id, inhabitant4);
         Assert.IsFalse(success, "This should not be possible, because there are already 2 Inhabitants in this building.");

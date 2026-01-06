@@ -13,7 +13,7 @@ public sealed class UtilsTests
         int tileWidth = 34;
         int tileHeight = 32;
         var output = Utils.ComputeBordersOfTile(new Point(-(tileWidth / 2), -(tileHeight / 2)), tileWidth, tileHeight);
-        Assert.AreEqual(6, output.Count);
+        Assert.HasCount(6, output);
         Assert.AreEqual(new Line(new Point(-17, -8), new Point(0, -16)), output[0]);
         Assert.AreEqual(new Line(new Point(0, -16), new Point(17, -8)), output[1]);
         Assert.AreEqual(new Line(new Point(17, -8), new Point(17, 8)), output[2]);
@@ -94,10 +94,10 @@ public sealed class UtilsTests
     {
         var city = TestUtils.CreateExampleCity1();
         var neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 1);
-        Assert.AreEqual(6, neighbors.Count);
+        Assert.HasCount(6, neighbors);
         neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 2);
-        Assert.AreEqual(18, neighbors.Count);
+        Assert.HasCount(18, neighbors);
         neighbors = Utils.GetNeighborsForDistance(city.Position, city.Position, 3);
-        Assert.AreEqual(36, neighbors.Count);
+        Assert.HasCount(36, neighbors);
     }
 }
