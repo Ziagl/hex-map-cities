@@ -6,6 +6,7 @@ public static class BuildingFactory
         {
             Name = definition.Name,
             MapImages = definition.MapImages,
+            Models3d = definition.Models3d,
             UIImage = definition.UIImage,
             Description = definition.Description,
             Type = definition.Type,

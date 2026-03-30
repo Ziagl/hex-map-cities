@@ -9,6 +9,9 @@ public record BuildingType
 
     [JsonPropertyName("mapImages")]
     public List<string> MapImages { get; set; } = new();
+    
+    [JsonPropertyName("models3d")]
+    public List<string> Models3d { get; set; } = new();
 
     [JsonPropertyName("uiImage")]
     public string UIImage { get; set; } = string.Empty;
