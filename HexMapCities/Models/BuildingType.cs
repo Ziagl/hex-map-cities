@@ -5,59 +5,44 @@ namespace com.hexagonsimulations.HexMapCities.Models;
 public record BuildingType
 {
     [JsonPropertyName("name")]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;    // name of the building
 
     [JsonPropertyName("mapImages")]
-    public List<string> MapImages { get; set; } = new();
+    public List<string> MapImages { get; set; } = new();    // list of images to display on the map (usually one, but more if there are other types - forest / jungle)
     
     [JsonPropertyName("models3d")]
-    public List<string> Models3d { get; set; } = new();
+    public List<string> Models3d { get; set; } = new();     // list of 3d models to display on the map (usually one, but more if there are other types - forest / jungle)
 
     [JsonPropertyName("uiImage")]
-    public string UIImage { get; set; } = string.Empty;
-
-    [JsonPropertyName("description")]
-    public string Description { get; set; } = string.Empty;
+    public string UIImage { get; set; } = string.Empty;    // image to display 
 
     [JsonPropertyName("type")]
-    public int Type { get; set; }
+    public int Type { get; set; }   // type id of the building
 
     [JsonPropertyName("era")]
-    public int Era { get; set; }
+    public int Era { get; set; }    // minimal era required to build this building
 
     [JsonPropertyName("invention")]
-    public int Invention { get; set; }
+    public int Invention { get; set; }  // invention needed to enable this building
 
-    [JsonPropertyName("foodLevel")]
-    public int FoodLevel { get; set; }
+    [JsonPropertyName("landscapeType")]
+    public int LandscapeType { get; set; }  // landscape type required to build this building (0...none)
 
-    [JsonPropertyName("productionLevel")]
-    public int ProductionLevel { get; set; }
-
-    [JsonPropertyName("food")]
-    public int Food { get; set; }
-
-    [JsonPropertyName("production")]
-    public int Production { get; set; }
-
-    [JsonPropertyName("gold")]
-    public int Gold { get; set; }
-
-    [JsonPropertyName("science")]
-    public int Science { get; set; }
+    [JsonPropertyName("terrainType")]
+    public int TerrainType { get; set; }    // terrain type required to build this building (0...none)
 
     [JsonPropertyName("citizens")]
-    public int Citizens { get; set; }
+    public int Citizens { get; set; }   // number of citizens can live in this building
 
     [JsonPropertyName("goodsCost")]
-    public Dictionary<int, int> GoodsCost { get; set; } = new();
+    public Dictionary<int, int> GoodsCost { get; set; } = new();    // goods needed to build this building
 
     [JsonPropertyName("productionCost")]
-    public int ProductionCost { get; set; }
+    public int ProductionCost { get; set; } // gold needed to build this building
 
     [JsonPropertyName("purchaseCost")]
-    public int PurchaseCost { get; set; }
+    public int PurchaseCost { get; set; }   // if set building can be bought for this amount of gold
 
     [JsonPropertyName("upkeepCost")]
-    public int UpkeepCost { get; set; }
+    public int UpkeepCost { get; set; } // gold needed every turn to maintain this building
 }
