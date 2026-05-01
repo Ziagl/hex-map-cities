@@ -14,6 +14,8 @@ public static class BuildingFactory
             LandscapeType = definition.LandscapeType,
             TerrainType = definition.TerrainType,
             Citizens = definition.Citizens,
+            Gold = definition.Gold,
+            Science = definition.Science,
             GoodsCost = definition.GoodsCost,
             ProductionCost = definition.ProductionCost,
             PurchaseCost = definition.PurchaseCost,

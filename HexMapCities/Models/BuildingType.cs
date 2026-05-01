@@ -34,6 +34,12 @@ public record BuildingType
     [JsonPropertyName("citizens")]
     public int Citizens { get; set; }   // number of citizens can live in this building
 
+    [JsonPropertyName("gold")]
+    public int Gold { get; set; }   // gold produced per turn by this building
+
+    [JsonPropertyName("science")]
+    public int Science { get; set; }   // science produced per turn by this building
+
     [JsonPropertyName("goodsCost")]
     public Dictionary<int, int> GoodsCost { get; set; } = new();    // goods needed to build this building
 
