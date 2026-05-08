@@ -29,7 +29,13 @@ public record BuildingType
     public int LandscapeType { get; set; }  // landscape type required to build this building (0...none)
 
     [JsonPropertyName("terrainType")]
-    public int TerrainType { get; set; }    // terrain type required to build this building (0...none)
+    public List<int> TerrainTypes { get; set; } = new();   // possible terrain types required to build this building (empty = any)
+
+    [JsonPropertyName("minFood")]
+    public int MinFood { get; set; }   // minimal food needed to build this building
+
+    [JsonPropertyName("minProduction")]
+    public int MinProduction { get; set; }   // minimal production needed to build this building
 
     [JsonPropertyName("citizens")]
     public int Citizens { get; set; }   // number of citizens can live in this building
