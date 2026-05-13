@@ -26,7 +26,7 @@ public record BuildingType
     public int Invention { get; set; }  // invention needed to enable this building
 
     [JsonPropertyName("landscapeType")]
-    public List<int> LandscapeType { get; set; } = new();   // possiblelandscape types required to build this building (empty = any)
+    public List<int> LandscapeTypes { get; set; } = new();   // possiblelandscape types required to build this building (empty = any)
 
     [JsonPropertyName("terrainType")]
     public List<int> TerrainTypes { get; set; } = new();    // possible terrain types required to build this building (empty = any)

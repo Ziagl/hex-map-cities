@@ -11,7 +11,7 @@ public static class BuildingFactory
             Type = definition.Type,
             Invention = definition.Invention,
             Era = definition.Era,
-            LandscapeType = definition.LandscapeType,
+            LandscapeTypes = definition.LandscapeTypes,
             TerrainTypes = definition.TerrainTypes,
             MinFood = definition.MinFood,
             MinProduction = definition.MinProduction,
