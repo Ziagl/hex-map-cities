@@ -60,7 +60,11 @@ public class CityBase : ICombatEntity
     // buildings
     [JsonPropertyName("buildings")]
     public List<BuildingBase> Buildings { get; set; } = new();
-    
+
+    // upgrades
+    [JsonPropertyName("upgrades")]  
+    public List<int> Upgrades { get; set; } = new(); // list of upgrade ids this city has (for example: palace, wall, ...)
+
     // inhabitants
     [JsonPropertyName("inhabitants")]
     public List<InhabitantBase> Inhabitants { get; set; } = new();

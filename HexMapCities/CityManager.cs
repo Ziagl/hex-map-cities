@@ -241,12 +241,13 @@ public class CityManager
     /// <param name="playerId">Player Id the city should belong (can be null).</param>
     /// <param name="buildingType">Type of building this city should have built (can be null).</param>
     /// <returns>List of cities that match the criteria.</returns>
-    public List<CityBase> FindCities(int? playerId = null, int? buildingType = null)
+    public List<CityBase> FindCities(int? playerId = null, int? buildingType = null, int? upgrade = null)
         => _cityStore.Values
             .Where(city => 
-                (playerId.HasValue || buildingType.HasValue) &&
+                (playerId.HasValue || buildingType.HasValue || upgrade.HasValue) &&
                 (!playerId.HasValue || city.Player == playerId.Value) &&
-                (buildingType == null || city.Buildings.Any(b => b.Type == buildingType)))
+                (buildingType == null || city.Buildings.Any(b => b.Type == buildingType)) &&
+                (upgrade == null || city.Upgrades.Contains(upgrade.Value)))
             .ToList();
 
     /// <summary>

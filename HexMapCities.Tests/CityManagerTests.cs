@@ -75,6 +75,7 @@ public sealed class CityManagerTests
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
         var city2 = TestUtils.CreateExampleCity2();
+        city2.Upgrades.AddRange(new List<int>() { 5, 17 });
         success = cityManager.CreateCity(city2);
         Assert.IsTrue(success);
         var city3 = TestUtils.CreateExampleCity1();
@@ -96,6 +97,11 @@ public sealed class CityManagerTests
         cities = cityManager.FindCities(null, 1); // palace
         Assert.HasCount(1, cities);
         Assert.AreEqual(city2.Id, cities.First().Id);
+        cities = cityManager.FindCities(null, null, 17);
+        Assert.HasCount(1, cities);
+        Assert.AreEqual(city2.Id, cities.First().Id);
+        cities = cityManager.FindCities(null, null, 99);
+        Assert.IsEmpty(cities);
     }
 
     [TestMethod]
