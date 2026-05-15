@@ -366,6 +366,21 @@ public sealed class CityManagerTests
     }
 
     [TestMethod]
+    public void AddUpgrade()
+    {
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+        success = cityManager.AddUpgrade(city.Id, 5);
+        Assert.IsTrue(success);
+        success = cityManager.AddUpgrade(city.Id, 5);
+        Assert.IsFalse(success);
+        success = cityManager.AddUpgrade(34, 2);
+        Assert.IsFalse(success);
+    }
+
+    [TestMethod]
     public void AddBuilding()
     {
         var city = TestUtils.CreateExampleCity1();

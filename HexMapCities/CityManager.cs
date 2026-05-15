@@ -379,6 +379,28 @@ public class CityManager
     }
 
     /// <summary>
+    /// Add given upgrade to given city.
+    /// </summary>
+    /// <param name="cityId">id of city</param>
+    /// <param name="upgradeId">upgrade id that should be added</param>
+    /// <returns>true if upgrade was added, false otherwise</returns>
+    public bool AddUpgrade(int cityId, int upgradeId)
+    {
+        var city = GetCityById(cityId);
+        // early exit is city was not found
+        if (city == null)
+        {
+            return false;
+        }
+        if (city.Upgrades.Contains(upgradeId))
+        {
+            return false;   // upgrade already exists
+        }
+        city.Upgrades.Add(upgradeId);
+        return true;
+    }
+
+    /// <summary>
     /// Add given building to given city at given position.
     /// </summary>
     /// <param name="cityId">id of city</param>
