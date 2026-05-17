@@ -11,6 +11,9 @@ public record BuildingBase : MapBuildingType
     [JsonPropertyName("position")]
     public CubeCoordinates Position { get; set; } // its position on the map
 
+    [JsonPropertyName("mapBuilding")]
+    public bool IsMapBuilding { get; set; } // to distinguish if it is a BaseBuildingType or a MapBuildingType
+
     // Internal constructor - only accessible within the same assembly
     // This allows BuildingFactory to create instances while preventing external code from doing so
     // JSON deserializer can still access it since it's in the same assembly

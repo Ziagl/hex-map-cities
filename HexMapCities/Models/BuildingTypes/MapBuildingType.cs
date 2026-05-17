@@ -15,8 +15,8 @@ public record MapBuildingType : BaseBuildingType
     public List<int> TerrainTypes { get; set; } = new();    // possible terrain types required to build this building (empty = any)
 
     [JsonPropertyName("minFood")]
-    public int MinFood { get; set; }   // minimal food needed to build this building
+    public int MinFood { get; set; } = 0;           // minimal food needed to build this building
 
     [JsonPropertyName("minProduction")]
-    public int MinProduction { get; set; }   // minimal production needed to build this building
+    public int MinProduction { get; set; } = 0;     // minimal production needed to build this building
 }

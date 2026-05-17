@@ -22,5 +22,26 @@ public static class BuildingFactory
             ProductionCost = definition.ProductionCost,
             PurchaseCost = definition.PurchaseCost,
             UpkeepCost = definition.UpkeepCost,
+            IsMapBuilding = true,
+        };
+
+    public static BuildingBase CreateBuilding(BaseBuildingType definition)
+        => new BuildingBase
+        {
+            Name = definition.Name,
+            MapImages = definition.MapImages,
+            Models3d = definition.Models3d,
+            UIImage = definition.UIImage,
+            Type = definition.Type,
+            Invention = definition.Invention,
+            Era = definition.Era,
+            Citizens = definition.Citizens,
+            Gold = definition.Gold,
+            Science = definition.Science,
+            GoodsCost = definition.GoodsCost,
+            ProductionCost = definition.ProductionCost,
+            PurchaseCost = definition.PurchaseCost,
+            UpkeepCost = definition.UpkeepCost,
+            IsMapBuilding = false,
         };
 }
