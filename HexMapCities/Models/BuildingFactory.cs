@@ -1,7 +1,7 @@
 ﻿namespace com.hexagonsimulations.HexMapCities.Models;
 public static class BuildingFactory
 {
-    public static BuildingBase CreateBuilding(BuildingType definition)
+    public static BuildingBase CreateBuilding(MapBuildingType definition)
         => new BuildingBase
         {
             Name = definition.Name,

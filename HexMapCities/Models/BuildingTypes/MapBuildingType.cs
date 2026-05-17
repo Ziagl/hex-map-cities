@@ -2,7 +2,11 @@
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 
-public record BuildingType : BaseBuildingType
+/*
+ * adds map specific properties to BaseBuildingType
+ * with them you can limit if the building can be built on specific tile characteristics
+ */
+public record MapBuildingType : BaseBuildingType
 {
     [JsonPropertyName("landscapeType")]
     public List<int> LandscapeTypes { get; set; } = new();   // possiblelandscape types required to build this building (empty = any)

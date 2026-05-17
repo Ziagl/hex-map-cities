@@ -2,6 +2,9 @@
 
 namespace com.hexagonsimulations.HexMapCities.Models;
 
+/*
+ * base building type record for a 4X game like civilization
+ */
 public record BaseBuildingType
 {
     [JsonPropertyName("name")]
@@ -45,4 +48,7 @@ public record BaseBuildingType
 
     [JsonPropertyName("upkeepCost")]
     public int UpkeepCost { get; set; } // gold needed every turn to maintain this building
+    
+    [JsonPropertyName("ownership")]
+    public int Ownership { get; set; }  // ownership type of this building (f.e. to distinguish player and non player buildings)
 }
