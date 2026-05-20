@@ -59,7 +59,7 @@ public class CityBase : ICombatEntity
 
     // buildings
     [JsonPropertyName("buildings")]
-    public List<BuildingBase> Buildings { get; set; } = new();
+    public List<BuildingBase> Buildings { get; set; } = new();  // buildings on the map
 
     // upgrades
     [JsonPropertyName("upgrades")]  
@@ -67,7 +67,7 @@ public class CityBase : ICombatEntity
 
     // inhabitants
     [JsonPropertyName("inhabitants")]
-    public List<InhabitantBase> Inhabitants { get; set; } = new();
+    public List<InhabitantBase> Inhabitants { get; set; } = new();  // inhabitants on city tiles with type (tents, houses, ...)
     
     // properties
     [JsonPropertyName("properties")]

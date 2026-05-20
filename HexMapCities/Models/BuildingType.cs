@@ -5,7 +5,7 @@ namespace com.hexagonsimulations.HexMapCities.Models;
 /*
  * base building type record for a 4X game like civilization
  */
-public record BaseBuildingType
+public record BuildingType
 {
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;    // name of the building
@@ -51,4 +51,16 @@ public record BaseBuildingType
     
     [JsonPropertyName("ownership")]
     public int Ownership { get; set; }  // ownership type of this building (f.e. to distinguish player and non player buildings)
+
+    [JsonPropertyName("landscapeType")]
+    public List<int> LandscapeTypes { get; set; } = new();   // possiblelandscape types required to build this building (empty = any)
+
+    [JsonPropertyName("terrainType")]
+    public List<int> TerrainTypes { get; set; } = new();    // possible terrain types required to build this building (empty = any)
+
+    [JsonPropertyName("minFood")]
+    public int MinFood { get; set; } = 0;           // minimal food needed to build this building
+
+    [JsonPropertyName("minProduction")]
+    public int MinProduction { get; set; } = 0;     // minimal production needed to build this building
 }
