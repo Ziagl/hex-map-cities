@@ -14,11 +14,11 @@ public class CityManager
     private MapData _map = new();
     private int _tileWidth = 0;
     private int _tileHeight = 0;
-    private List<MapBuildingType> _buildingDefinitions = new();
+    private List<BuildingType> _buildingDefinitions = new();
 
     private CityManager() { }
 
-    public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, List<MapBuildingType> buildingDefinitions, int tileWidth = 1, int tileHeight = 1)
+    public CityManager(List<int> map, int rows, int columns, List<int> notPassableTiles, List<BuildingType> buildingDefinitions, int tileWidth = 1, int tileHeight = 1)
     {
         _map.Rows = rows;
         _map.Columns = columns;
@@ -566,7 +566,7 @@ public class CityManager
         public int TileHeight { get; set; }
         public MapData MapData { get; set; } = new();
         public Dictionary<int, CityBase> CityStore { get; set; } = new();
-        public List<MapBuildingType> BuildingDefinitions { get; set; } = new();
+        public List<BuildingType> BuildingDefinitions { get; set; } = new();
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
