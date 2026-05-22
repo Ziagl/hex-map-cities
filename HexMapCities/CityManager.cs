@@ -56,6 +56,14 @@ public class CityManager
         {
             return false;
         }
+        // early exit if position is already a city position or city tile of another city
+        foreach (var existingCity in _cityStore.Values)
+        {
+            if (existingCity.Position == city.Position || existingCity.Tiles.Contains(city.Position))
+            {
+                return false;
+            }
+        }
         // add city to store
         _lastCityStoreId++;
         city.Id = _lastCityStoreId;

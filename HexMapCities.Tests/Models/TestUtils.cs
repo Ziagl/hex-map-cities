@@ -60,11 +60,11 @@ internal class TestUtils
         };
     }
 
-    internal static List<MapBuildingType> CreateBuildingTypes()
+    internal static List<BuildingType> CreateBuildingTypes()
     {
-        return new List<MapBuildingType>
+        return new List<BuildingType>
         {
-            new MapBuildingType()
+            new BuildingType()
             {
                 Name = "Palace",
                 Type = 1,
@@ -73,7 +73,7 @@ internal class TestUtils
                 ProductionCost = 150,
                 PurchaseCost = 500
             },
-            new MapBuildingType()
+            new BuildingType()
             {
                 Name = "Lumberjack",
                 Type = 2,
@@ -82,7 +82,7 @@ internal class TestUtils
                 ProductionCost = 150,
                 PurchaseCost = 500
             },
-            new MapBuildingType()
+            new BuildingType()
             {
                 Name = "House",
                 Type = 3,

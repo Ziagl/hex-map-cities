@@ -11,11 +11,11 @@ public sealed class CityManagerSerializationTests
 {
     private readonly string TempDir = @"C:\Temp\";
 
-    private readonly List<MapBuildingType> _buildingDefinitions = new();
+    private readonly List<BuildingType> _buildingDefinitions = new();
 
     public CityManagerSerializationTests()
     {
-        _buildingDefinitions.Add(new MapBuildingType() { });
+        _buildingDefinitions.Add(new BuildingType() { });
     }
 
     [TestMethod]
@@ -183,10 +183,10 @@ public sealed class CityManagerSerializationTests
         CollectionAssert.AreEqual(expectedMap.Map, actualMap.Map, "Map data does not match.");
 
         // Compare _buildingDefinitions
-        var expectedBuildingDefinitions = (List<MapBuildingType>)expectedType
+        var expectedBuildingDefinitions = (List<BuildingType>)expectedType
             .GetField("_buildingDefinitions", BindingFlags.NonPublic | BindingFlags.Instance)!
             .GetValue(expected)!;
-        var actualBuildingDefinitions = (List<MapBuildingType>)actualType
+        var actualBuildingDefinitions = (List<BuildingType>)actualType
             .GetField("_buildingDefinitions", BindingFlags.NonPublic | BindingFlags.Instance)!
             .GetValue(actual)!;
 
