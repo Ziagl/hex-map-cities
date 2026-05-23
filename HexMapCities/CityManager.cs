@@ -417,17 +417,19 @@ public class CityManager
     /// <returns>true if building was built, false otherwise</returns>
     public bool AddBuilding(int cityId, CubeCoordinates coordinates, int buildingTypeId)
     {
-        // early exit if buildingTypeId is not valid
-        if (buildingTypeId < 1 || buildingTypeId > _buildingDefinitions.Count)
+        var buildingDefinition = _buildingDefinitions.FirstOrDefault(b => b.Type == buildingTypeId);
+        // early exit if buildingDefiniton is not valid
+        if (buildingDefinition is null)
         {
             return false;
         }
         // check if building type is known
-        var building = BuildingFactory.CreateBuilding(_buildingDefinitions[buildingTypeId-1]);
-        if(building is null)
+        var building = BuildingFactory.CreateBuilding(buildingDefinition);
+        if (building is null)
         {
             return false;
         }
+
         return AddBuilding(cityId, coordinates, building);
     }
 
