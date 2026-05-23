@@ -75,7 +75,7 @@ public sealed class CityManagerSerializationTests
         var newTilePosition = new CubeCoordinates(-1, 2, -1);
         success = cityManager.AddCityTile(city.Id, newTilePosition);
         Assert.IsTrue(success);
-        success = cityManager.AddBuilding(city.Id, newTilePosition, 3 /*House*/);
+        success = cityManager.AddBuilding(city.Id, newTilePosition, 103 /*House*/);
         Assert.IsTrue(success);
         success = cityManager.AddInhabitant(city.Id, new InhabitantBase(newTilePosition, TestUtils.CreateInhabitantNeeds()));
         Assert.IsTrue(success);

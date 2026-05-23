@@ -67,7 +67,7 @@ internal class TestUtils
             new BuildingType()
             {
                 Name = "Palace",
-                Type = 1,
+                Type = 101,
                 Era = 1,
                 Invention = 4,
                 ProductionCost = 150,
@@ -76,7 +76,7 @@ internal class TestUtils
             new BuildingType()
             {
                 Name = "Lumberjack",
-                Type = 2,
+                Type = 102,
                 Era = 1,
                 Invention = 4,
                 ProductionCost = 150,
@@ -85,7 +85,7 @@ internal class TestUtils
             new BuildingType()
             {
                 Name = "House",
-                Type = 3,
+                Type = 103,
                 Era = 1,
                 Invention = 4,
                 ProductionCost = 150,

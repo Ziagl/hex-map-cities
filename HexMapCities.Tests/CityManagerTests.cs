@@ -104,13 +104,13 @@ public sealed class CityManagerTests
         Assert.HasCount(2, cities);
         cities = cityManager.GetCitiesOfPlayer(1);
         Assert.HasCount(1, cities);
-        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 0, -2), 1); // palace
+        success = cityManager.AddBuilding(city2.Id, new CubeCoordinates(2, 0, -2), 101); // palace
         Assert.IsTrue(success);
         cities = cityManager.FindCities(null, null);
         Assert.IsEmpty(cities);
         cities = cityManager.FindCities(city.Player, null);
         Assert.HasCount(1, cities);
-        cities = cityManager.FindCities(null, 1); // palace
+        cities = cityManager.FindCities(null, 101); // palace
         Assert.HasCount(1, cities);
         Assert.AreEqual(city2.Id, cities.First().Id);
         cities = cityManager.FindCities(null, null, 17);
@@ -403,8 +403,8 @@ public sealed class CityManagerTests
         var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
         bool success = cityManager.CreateCity(city);
         Assert.IsTrue(success);
-        int palace = 1;
-        int lumberjack = 2;
+        int palace = 101;
+        int lumberjack = 102;
         // add building by id
         success = cityManager.AddBuilding(city.Id, new CubeCoordinates(1, 0, -1), lumberjack);
         Assert.IsTrue(success, "add first building");
