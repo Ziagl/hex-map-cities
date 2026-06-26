@@ -546,4 +546,36 @@ public sealed class CityManagerTests
         inhabitant.SatisfyNeed(2, 3); // Satisfy need with type 2 at round 2
         Assert.AreEqual(100, inhabitant.Satisfaction, "Satisfaction should be 100 after satisfying need at round 3.");
     }
+
+    [TestMethod]
+    public void FreeInhabitantPlaces()
+    {
+        var city = TestUtils.CreateExampleCity1();
+        var cityManager = new CityManager(Enumerable.Repeat(0, 16).ToList(), 4, 4, new List<int>(), TestUtils.CreateBuildingTypes(), _tileWidth, _tileHeight);
+        bool success = cityManager.CreateCity(city);
+        Assert.IsTrue(success);
+
+        // no buildings -> 0 free places
+        Assert.AreEqual(0, cityManager.FreeInhabitantPlaces(city.Id), "City with no buildings should have 0 free places.");
+
+        // invalid city id -> -1
+        Assert.AreEqual(-1, cityManager.FreeInhabitantPlaces(999), "Unknown city id should return -1.");
+
+        // add two buildings (each with Citizens = 2) -> 4 free places
+        city.Buildings.Add(TestUtils.CreateExampleBuilding(city.Position));
+        city.Buildings.Add(TestUtils.CreateExampleBuilding(new CubeCoordinates(1, 0, -1)));
+        Assert.AreEqual(4, cityManager.FreeInhabitantPlaces(city.Id), "Two buildings with 2 citizens each should give 4 free places.");
+
+        // add 1 inhabitant -> 3 free places
+        var inhabitant = new InhabitantBase(city.Position, new List<InhabitantNeed>());
+        success = cityManager.AddInhabitant(city.Id, inhabitant);
+        Assert.IsTrue(success);
+        Assert.AreEqual(3, cityManager.FreeInhabitantPlaces(city.Id), "One inhabitant should reduce free places to 3.");
+
+        // fill all remaining places -> 0 free places
+        cityManager.AddInhabitant(city.Id, new InhabitantBase(city.Position, new List<InhabitantNeed>()));
+        cityManager.AddInhabitant(city.Id, new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>()));
+        cityManager.AddInhabitant(city.Id, new InhabitantBase(new CubeCoordinates(1, 0, -1), new List<InhabitantNeed>()));
+        Assert.AreEqual(0, cityManager.FreeInhabitantPlaces(city.Id), "Fully occupied city should have 0 free places.");
+    }
 }

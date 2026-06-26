@@ -568,6 +568,25 @@ public class CityManager
         }
         return inhabitants;
     }
+    
+    
+
+    /// <summary>
+    /// Returns the number of free inhabitant places in a city (total building capacity minus current inhabitants).
+    /// </summary>
+    /// <param name="cityId">Id of the city to check</param>
+    /// <returns>number of free places, or -1 if city not found</returns>
+    public int FreeInhabitantPlaces(int cityId)
+    {
+        var city = GetCityById(cityId);
+        if (city == null)
+        {
+            return -1;
+        }
+
+        int totalCapacity = city.Buildings.Sum(b => b.Citizens);
+        return totalCapacity - city.Inhabitants.Count;
+    }
 
     private sealed class CityManagerState
     {
